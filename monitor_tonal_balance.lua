@@ -1,3 +1,4 @@
+-- TOGGLE VISIBILITY OF TONAL BALANCE CONTROL
 local POS_TONAL = 2
 local track = reaper.GetMasterTrack()
 POS_TONAL = (0x1000000 + (POS_TONAL-1))
