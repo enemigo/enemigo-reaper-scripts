@@ -1,3 +1,5 @@
+-- THIS SCRIPT IS A MESSAGE TO KNOW HOW MANY MILISECONDS USE ON DELAYS OR RELEASES
+
 local tempo=reaper.Master_GetTempo()
 
 
