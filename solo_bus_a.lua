@@ -1,22 +1,33 @@
 --[[
- * ReaScript Name: Toggle Select A BUS
- * Description: Hace toggle en la pista cuyo nombre contenga "A" (bus).
- * Author: Jason Tackaberry (tack) / Modificado por Patricio
+ * ReaScript Name: Toggle Select and Solo BUS (con creación si no existe)
+ * Description: Valida si existe una pista (bus) cuyo nombre contenga el nombre definido en la variable "busName". 
+ *              Si no existe, la crea. Luego, hace toggle en la selección y en el solo de dicha pista.
+ * Author: Patricio Maripani Navarro
  * Licence: Public Domain
  * Extensions: SWS/S&M 2.8.0
- * Version: 1.2
+ * Version: 1.5
 --]]
+
+-- Variable que define el nombre del bus
+local busName = "A"
 
 INSTRUMENT_TRACKS_ONLY = false
 
-function toggleTrackSelection(track)
-    if reaper.IsTrackSelected(track) then
+function toggleTrackSelectionAndSolo(track)
+    local isSelected = reaper.IsTrackSelected(track)
+    local soloState = reaper.GetMediaTrackInfo_Value(track, "I_SOLO")
+    if isSelected and soloState == 1 then
+        -- Si la pista ya está seleccionada y en solo, se deselecciona y se quita el solo.
         reaper.SetTrackSelected(track, false)
+        reaper.SetMediaTrackInfo_Value(track, "I_SOLO", 0)
     else
+        -- De lo contrario, se des-solo todas las pistas, se selecciona solo esta pista y se pone en solo.
+        reaper.Main_OnCommand(40340, 0)  -- Des-solo todas las pistas.
         reaper.SetOnlyTrackSelected(track)
+        reaper.SetMediaTrackInfo_Value(track, "I_SOLO", 1)
         reaper.SetMixerScroll(track)
-        reaper.Main_OnCommandEx(40914, 0, 0)  -- Establece la pista como la última tocada.
-        reaper.Main_OnCommandEx(40913, 0, 0)  -- Hace scroll vertical de la pista a la vista.
+        reaper.Main_OnCommandEx(40914, 0, 0)  -- Establece la pista seleccionada como la última tocada.
+        reaper.Main_OnCommandEx(40913, 0, 0)  -- Desplaza la pista a la vista.
     end
 end
 
@@ -77,7 +88,7 @@ function getScore(track, term)
 end
 
 function main()
-    local term = "A"
+    local term = busName
     if #term == 0 then return end
 
     local matches = ""
@@ -96,8 +107,17 @@ function main()
         matches = matches .. (matches ~= "" and " " or "") .. trackIdx .. "/" .. score
     end
 
+    -- Si no existe una pista que contenga el nombre definido, se crea al final del proyecto.
+    if not bestTrack then
+        local trackCount = reaper.CountTracks(0)
+        reaper.InsertTrackAtIndex(trackCount, true)
+        bestTrack = reaper.GetTrack(0, trackCount)
+        reaper.GetSetMediaTrackInfo_String(bestTrack, "P_NAME", busName, true)
+        bestTrackIdx = trackCount
+    end
+
     if bestTrack then
-        toggleTrackSelection(bestTrack)
+        toggleTrackSelectionAndSolo(bestTrack)
     end
 
     reaper.SetExtState("select_track_by_name", "matches", matches, false)
