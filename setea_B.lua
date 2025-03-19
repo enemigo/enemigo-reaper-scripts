@@ -5,14 +5,15 @@
  *   sin crear duplicados de envíos. La estructura es:
  *     - Bus "B" (color morado)
  *         - Sub-buses "GDRUM" y "NY" (ruteados a "B")
- *     - Pistas en "GDRUM": "BOMBO", "SNARE_TOP", "SNARE_BOTTOM", "CAJA" y "ROOM" (sin Main Output),
+ *     - Pistas en "GDRUM": "BOMBO", "SNARE_TOP", "SNARE_BOTTOM" y "CAJA" (sin Main Output),
  *         con "BOMBO" y "CAJA" con envío extra a "NY".
  *     - Bus "OH" (sin Main Output, ruteado a "GDRUM") con dentro "OHL" (paneado -1.0) y "OHR" (paneado 1.0).
- *     - Bus "TOMS" (sin Main Output, ruteado a "GDRUM" y "NY") con dentro "TOM1" (paneado -0.70),
+ *     - Bus "TOMS" (sin Main Output, ruteado a "GDRUM" y a "NY") con dentro "TOM1" (paneado -0.70),
  *       "TOM2" (paneado 0.20) y "TOM3" (paneado 0.70).
+ *     - La pista "ROOM" se genera al final, se enruta a "GDRUM" y se mueve al final.
  * Author: Patricio Maripani Navarro
  * Licence: Public Domain
- * Version: 1.5
+ * Version: 1.6
 --]]
 
 -------------------------------------------------------------------------------
@@ -54,14 +55,11 @@ end
 local function ensureSend(source, dest)
   local sendCount = reaper.GetTrackNumSends(source, 0) -- 0 = sends
   for i = 0, sendCount - 1 do
-    -- Obtenemos el track destino real del envío i
     local trackDest = reaper.GetTrackSendInfo_Value(source, 0, i, "P_DESTTRACK")
     if trackDest == dest then
-      -- Ya existe el envío a 'dest', no duplicar
-      return
+      return -- El envío ya existe, no duplicar
     end
   end
-  -- Si llegamos aquí, es que no existe envío a esa pista, así que lo creamos
   reaper.CreateTrackSend(source, dest)
 end
 
@@ -86,13 +84,12 @@ function main()
   ensureSend(trackGDRUM, trackB)
   ensureSend(trackNY, trackB)
   
-  -- Pistas en GDRUM
+  -- Pistas en GDRUM (excepto ROOM)
   local trackBOMBO = getOrCreateTrack("BOMBO")
   configureTrack(trackBOMBO)
   ensureSend(trackBOMBO, trackGDRUM)
   ensureSend(trackBOMBO, trackNY)  -- envío extra a NY
   
-  -- Cambiado de SNARE_UP a SNARE_TOP
   local trackSNARE_TOP = getOrCreateTrack("SNARE_TOP")
   configureTrack(trackSNARE_TOP)
   ensureSend(trackSNARE_TOP, trackGDRUM)
@@ -105,10 +102,6 @@ function main()
   configureTrack(trackCAJA)
   ensureSend(trackCAJA, trackGDRUM)
   ensureSend(trackCAJA, trackNY)   -- envío extra a NY
-  
-  local trackROOM = getOrCreateTrack("ROOM")
-  configureTrack(trackROOM)
-  ensureSend(trackROOM, trackGDRUM)
   
   -- Bus OH, sin Main Output, ruteado a GDRUM
   local trackOH = getOrCreateTrack("OH")
@@ -142,6 +135,14 @@ function main()
   local trackTOM3 = getOrCreateTrack("TOM3")
   configureTrack(trackTOM3, 0.70)
   ensureSend(trackTOM3, trackTOMS)
+  
+  -- Generar la pista ROOM al final
+  local trackROOM = getOrCreateTrack("ROOM")
+  configureTrack(trackROOM)
+  ensureSend(trackROOM, trackGDRUM)
+  -- Mover ROOM al final de la lista de pistas
+  local totalTracks = reaper.CountTracks(0)
+  reaper.MoveTrackToIndex(trackROOM, totalTracks - 1)
 end
 
 reaper.defer(main)
