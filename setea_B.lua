@@ -10,10 +10,10 @@
  *     - Bus "OH" (sin Main Output, ruteado a "GDRUM") con dentro "OHL" (paneado -1.0) y "OHR" (paneado 1.0).
  *     - Bus "TOMS" (sin Main Output, ruteado a "GDRUM" y a "NY") con dentro "TOM1" (paneado -0.70),
  *       "TOM2" (paneado 0.20) y "TOM3" (paneado 0.70).
- *     - La pista "ROOM" se genera al final, se enruta a "GDRUM" y se mueve al final.
+ *     - La pista "ROOM" se genera o actualiza y se mueve al final, ruteada a "GDRUM".
  * Author: Patricio Maripani Navarro
  * Licence: Public Domain
- * Version: 1.6
+ * Version: 1.7
 --]]
 
 -------------------------------------------------------------------------------
@@ -136,13 +136,14 @@ function main()
   configureTrack(trackTOM3, 0.70)
   ensureSend(trackTOM3, trackTOMS)
   
-  -- Generar la pista ROOM al final
+  -- Generar o actualizar la pista ROOM y moverla al final
   local trackROOM = getOrCreateTrack("ROOM")
   configureTrack(trackROOM)
   ensureSend(trackROOM, trackGDRUM)
-  -- Mover ROOM al final de la lista de pistas
-  local totalTracks = reaper.CountTracks(0)
-  reaper.MoveTrackToIndex(trackROOM, totalTracks - 1)
+  
+  -- Seleccionar ROOM como única pista seleccionada y moverla al final usando el comando de acción.
+  reaper.SetOnlyTrackSelected(trackROOM)
+  reaper.Main_OnCommand(40635, 0)  -- "Track: Move selected tracks to bottom of track list"
 end
 
 reaper.defer(main)
