@@ -1,27 +1,23 @@
 --[[
- * ReaScript Name: Select A BUS
- * Description: Selecciona la pista cuyo nombre contenga "A" (bus).
+ * ReaScript Name: Toggle Select A BUS
+ * Description: Hace toggle en la pista cuyo nombre contenga "A" (bus).
  * Author: Jason Tackaberry (tack) / Modificado por Patricio
  * Licence: Public Domain
  * Extensions: SWS/S&M 2.8.0
- * Version: 1.1
+ * Version: 1.2
 --]]
 
 INSTRUMENT_TRACKS_ONLY = false
 
-function focusTrack(track, multiselect)
-    if multiselect == "1" or multiselect == true then
-        reaper.SetTrackSelected(track, true)
+function toggleTrackSelection(track)
+    if reaper.IsTrackSelected(track) then
+        reaper.SetTrackSelected(track, false)
     else
         reaper.SetOnlyTrackSelected(track)
+        reaper.SetMixerScroll(track)
+        reaper.Main_OnCommandEx(40914, 0, 0)  -- Establece la pista como la última tocada.
+        reaper.Main_OnCommandEx(40913, 0, 0)  -- Hace scroll vertical de la pista a la vista.
     end
-    
-    -- Opcional: para hacer scroll en el mezclador y centrar la pista.
-    reaper.SetMixerScroll(track)
-    -- Establece la pista seleccionada como la última tocada.
-    reaper.Main_OnCommandEx(40914, 0, 0)
-    -- Desplaza verticalmente la pista seleccionada a la vista.
-    reaper.Main_OnCommandEx(40913, 0, 0)
 end
 
 function isInstrumentTrack(track)
@@ -67,7 +63,6 @@ function getScore(track, term)
                 score = score + (100 - distance)
             end
             if termPos == #term then
-                -- Se ha completado la coincidencia.
                 score = score + (instrument and 0.1 or 0)
                 score = score + (enabled and 0.1 or 0)
                 return score
@@ -102,7 +97,7 @@ function main()
     end
 
     if bestTrack then
-        focusTrack(bestTrack, false)
+        toggleTrackSelection(bestTrack)
     end
 
     reaper.SetExtState("select_track_by_name", "matches", matches, false)
