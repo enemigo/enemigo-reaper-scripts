@@ -5,14 +5,14 @@
  *   sin crear duplicados de envíos. La estructura es:
  *     - Bus "B" (color morado)
  *         - Sub-buses "GDRUM" y "NY" (ruteados a "B")
- *     - Pistas en "GDRUM": "BOMBO", "SNARE_UP", "SNARE_DOWN", "CAJA" y "ROOM" (sin Main Output),
+ *     - Pistas en "GDRUM": "BOMBO", "SNARE_TOP", "SNARE_BOTTOM", "CAJA" y "ROOM" (sin Main Output),
  *         con "BOMBO" y "CAJA" con envío extra a "NY".
  *     - Bus "OH" (sin Main Output, ruteado a "GDRUM") con dentro "OHL" (paneado -1.0) y "OHR" (paneado 1.0).
  *     - Bus "TOMS" (sin Main Output, ruteado a "GDRUM" y "NY") con dentro "TOM1" (paneado -0.70),
  *       "TOM2" (paneado 0.20) y "TOM3" (paneado 0.70).
  * Author: Patricio Maripani Navarro
  * Licence: Public Domain
- * Version: 1.3
+ * Version: 1.5
 --]]
 
 -------------------------------------------------------------------------------
@@ -92,13 +92,14 @@ function main()
   ensureSend(trackBOMBO, trackGDRUM)
   ensureSend(trackBOMBO, trackNY)  -- envío extra a NY
   
-  local trackSNARE_UP = getOrCreateTrack("SNARE_UP")
-  configureTrack(trackSNARE_UP)
-  ensureSend(trackSNARE_UP, trackGDRUM)
+  -- Cambiado de SNARE_UP a SNARE_TOP
+  local trackSNARE_TOP = getOrCreateTrack("SNARE_TOP")
+  configureTrack(trackSNARE_TOP)
+  ensureSend(trackSNARE_TOP, trackGDRUM)
   
-  local trackSNARE_DOWN = getOrCreateTrack("SNARE_DOWN")
-  configureTrack(trackSNARE_DOWN)
-  ensureSend(trackSNARE_DOWN, trackGDRUM)
+  local trackSNARE_BOTTOM = getOrCreateTrack("SNARE_BOTTOM")
+  configureTrack(trackSNARE_BOTTOM)
+  ensureSend(trackSNARE_BOTTOM, trackGDRUM)
   
   local trackCAJA = getOrCreateTrack("CAJA")
   configureTrack(trackCAJA)
