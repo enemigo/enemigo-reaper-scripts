@@ -1,12 +1,10 @@
 --[[
  * ReaScript Name: Select A BUS
- * Description: Select track name by SublimeText-esque substring match.  Use the companion "Next" script
-                to advance to next match.
- * Author: Jason Tackaberry (tack)
+ * Description: Selecciona la pista cuyo nombre contenga "A" (bus).
+ * Author: Jason Tackaberry (tack) / Modificado por Patricio
  * Licence: Public Domain
  * Extensions: SWS/S&M 2.8.0
- * Version: 1.0
- * Original: https://gist.github.com/jtackaberry/da3e192c560fd2b02b93709360ffe5b5
+ * Version: 1.1
 --]]
 
 INSTRUMENT_TRACKS_ONLY = false
@@ -18,25 +16,18 @@ function focusTrack(track, multiselect)
         reaper.SetOnlyTrackSelected(track)
     end
     
-   -- reaper.Main_OnCommand(7, 0 ) -- solo selected
-   -- reaper.Main_OnCommand(40340, 0 )  -- Track: Unsolo all tracks
-   
+    -- Opcional: para hacer scroll en el mezclador y centrar la pista.
     reaper.SetMixerScroll(track)
-    -- Track: Set first selected track as last touched track.
+    -- Establece la pista seleccionada como la última tocada.
     reaper.Main_OnCommandEx(40914, 0, 0)
-    -- Track: Vertical scroll selected tracks into view.
+    -- Desplaza verticalmente la pista seleccionada a la vista.
     reaper.Main_OnCommandEx(40913, 0, 0)
 end
 
-
-
 function isInstrumentTrack(track)
-    -- Iterate over all FX and look for FX names prefixed with
-    -- "VSTi:".  We can't use TrackFX_GetInstrument because it skips
-    -- offlined instruments.
     for fxIdx = 0, reaper.TrackFX_GetCount(track) - 1 do
-        r, name = reaper.TrackFX_GetFXName(track, fxIdx, "")
-        if string.sub(name, 0, 5) == "VSTi:" then
+        local ret, fxName = reaper.TrackFX_GetFXName(track, fxIdx, "")
+        if string.sub(fxName, 1, 5) == "VSTi:" then
             return true
         end
     end
@@ -47,7 +38,6 @@ function getScore(track, term)
     local termPos = 1
     local lastMatchPos = 0
     local score = 0
-    local match = false
     local instrument = isInstrumentTrack(track)
     local enabled = reaper.GetMediaTrackInfo_Value(track, "I_FXEN") > 0
 
@@ -55,7 +45,7 @@ function getScore(track, term)
         if not enabled then
             return 0
         end
-        term = term:sub(2, #term)
+        term = term:sub(2)
     end
 
     if not instrument and INSTRUMENT_TRACKS_ONLY then
@@ -63,8 +53,8 @@ function getScore(track, term)
     end
 
     local termCh = term:sub(termPos, termPos):lower()
-    local name, flags = reaper.GetTrackState(track)
-    visible = reaper.GetMediaTrackInfo_Value(track, "B_SHOWINTCP")
+    local retval, name = reaper.GetTrackName(track, "")
+    local visible = reaper.GetMediaTrackInfo_Value(track, "B_SHOWINTCP")
     if visible == 0 then
         return 0
     end
@@ -77,9 +67,10 @@ function getScore(track, term)
                 score = score + (100 - distance)
             end
             if termPos == #term then
-                -- We have matched all characters in the term
-                match = true
-                break
+                -- Se ha completado la coincidencia.
+                score = score + (instrument and 0.1 or 0)
+                score = score + (enabled and 0.1 or 0)
+                return score
             else
                 lastMatchPos = namePos
                 termPos = termPos + 1
@@ -87,63 +78,34 @@ function getScore(track, term)
             end
         end
     end
-    if not match then
-        return 0
-    else
-        -- Add 0.1 if this is an instrument track.
-        if instrument then
-            score = score + 0.1
-        end
-        -- Add another 0.1 if the track is enabled
-        if reaper.GetMediaTrackInfo_Value(track, "I_FXEN") > 0 then
-            score = score + 0.1
-        end
-        -- reaper.ShowConsoleMsg(name .. " -- " .. score .. "\n")
-        return score
-    end
+    return 0
 end
 
 function main()
-    --r, term = reaper.GetUserInputs("Select track", 1, "Track name", "")
-    --r, term = reaper.GetUserInputs("Select track", 1, "Track name", "")
-    --r, 
-    term="A"
-    
-   -- reaper.ShowConsoleMsg("term: "..term)
-    if #term == 0 or not term then
-        return
-    end
+    local term = "A"
+    if #term == 0 then return end
 
-    local matches = nil
+    local matches = ""
     local bestScore = 0
     local bestTrack = nil
     local bestTrackIdx = nil
 
     for trackIdx = 0, reaper.CountTracks(0) - 1 do
-        track = reaper.GetTrack(0, trackIdx)
-        score = getScore(track, term)
-        if score > 0 then
-            if score > bestScore then
-                bestScore = score
-                bestTrack = track
-                
-                bestTrackIdx = trackIdx
-            end
-            local result = trackIdx .. "/" .. score
-            if matches then
-                matches = matches .. " " .. result
-            else
-                matches = result
-            end
+        local track = reaper.GetTrack(0, trackIdx)
+        local score = getScore(track, term)
+        if score > bestScore then
+            bestScore = score
+            bestTrack = track
+            bestTrackIdx = trackIdx
         end
+        matches = matches .. (matches ~= "" and " " or "") .. trackIdx .. "/" .. score
     end
+
     if bestTrack then
-       -- focusTrack(bestTrack, false)
-        reaper.SetOnlyTrackSelected(bestTrack)
-        reaper.Main_OnCommand( 40281,0)
-        
+        focusTrack(bestTrack, false)
     end
-    reaper.SetExtState("select_track_by_name", "matches", matches or "", false)
+
+    reaper.SetExtState("select_track_by_name", "matches", matches, false)
     reaper.SetExtState("select_track_by_name", "current", bestTrackIdx or "", false)
 end
 
