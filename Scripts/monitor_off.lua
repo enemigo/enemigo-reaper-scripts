@@ -1,4 +1,4 @@
--- @description Monitor: bypass Sonarworks y Sienna
+-- @description pmn_Monitor: bypass Sonarworks y Sienna
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog

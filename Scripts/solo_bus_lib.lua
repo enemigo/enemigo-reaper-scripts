@@ -1,4 +1,4 @@
--- @description Solo bus: librería compartida (no es una acción)
+-- @description pmn_Solo bus: librería compartida (no es una acción)
 -- @author Patricio Maripani Navarro
 -- @version 1.0
 -- @noindex

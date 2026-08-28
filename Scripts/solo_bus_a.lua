@@ -1,4 +1,4 @@
--- @description Solo bus (A/B/C/D/VOX): toggle select + solo con creación
+-- @description pmn_Solo bus (A/B/C/D/VOX): toggle select + solo con creación
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog
@@ -11,7 +11,7 @@
 --   Este paquete instala las acciones de los buses A, B, C, D y VOX.
 -- @requires SWS/S&M Extension
 -- @provides
---   [main] solo_bus_lib.lua
+--   [nomain] solo_bus_lib.lua
 --   [main] solo_bus_b.lua
 --   [main] solo_bus_c.lua
 --   [main] solo_bus_d.lua

@@ -1,4 +1,4 @@
--- @description Monitor: alternar Sonarworks / Sienna
+-- @description pmn_Monitor: alternar Sonarworks / Sienna
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog

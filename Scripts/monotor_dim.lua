@@ -1,4 +1,4 @@
--- @description Monitor: toggle bypass plugin DIM
+-- @description pmn_Monitor: toggle bypass plugin DIM
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog

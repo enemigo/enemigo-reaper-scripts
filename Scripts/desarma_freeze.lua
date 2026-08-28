@@ -1,4 +1,4 @@
--- @description EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends
+-- @description pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog

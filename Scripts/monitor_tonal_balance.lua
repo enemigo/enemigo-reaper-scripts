@@ -1,4 +1,4 @@
--- @description Monitor: mostrar/ocultar Tonal Balance Control
+-- @description pmn_Monitor: mostrar/ocultar Tonal Balance Control
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog

@@ -1,4 +1,4 @@
--- @description Sincroniza tempo: calculadora de ms por división rítmica (ReaImGui)
+-- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (ReaImGui)
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog

@@ -1,4 +1,4 @@
--- @description AUTO FREEZE ReaInsert (copy routing, color, MASTER SEND state, smart mono/stereo, go to 0 and RECORD)
+-- @description pmn_AUTO FREEZE ReaInsert (copy routing, color, MASTER SEND state, smart mono/stereo, go to 0 and RECORD)
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog

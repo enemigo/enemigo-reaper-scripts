@@ -1,4 +1,4 @@
--- @description Monitor: alternar 3 plugins (Sonarworks / Sienna / Extra)
+-- @description pmn_Monitor: alternar 3 plugins (Sonarworks / Sienna / Extra)
 -- @author Patricio Maripani Navarro
 -- @version 2.0
 -- @changelog

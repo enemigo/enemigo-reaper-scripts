@@ -1,4 +1,4 @@
--- @description Estructura de mezcla completa con ruteo automático (batería, grupos, voces, guitarras, bajos)
+-- @description pmn_Estructura de mezcla completa con ruteo automático (batería, grupos, voces, guitarras, bajos)
 -- @author Patricio Maripani Navarro
 -- @version 4.1
 -- @changelog

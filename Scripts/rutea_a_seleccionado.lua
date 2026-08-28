@@ -1,4 +1,4 @@
--- @description Enviar pistas seleccionadas a la primera (sin duplicar envíos y replicando color)
+-- @description pmn_Enviar pistas seleccionadas a la primera (sin duplicar envíos y replicando color)
 -- @author Patricio Maripani Navarro
 -- @version 1.2
 -- @changelog

@@ -1,4 +1,4 @@
--- Solo bus VOX — acción instalada por el paquete solo_bus_a.lua (no es un paquete propio).
+-- @description pmn_Solo bus VOX (creación si no existe)
 -- @noindex
 local script_dir = debug.getinfo(1, "S").source:match("@?(.*)[/\\][^/\\]*$")
 local lib = dofile(script_dir .. "/solo_bus_lib.lua")
