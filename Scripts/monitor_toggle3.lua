@@ -7,7 +7,7 @@
 --   Cicla entre tres plugins de monitorización del canal máster (Sonarworks, Sienna y Extra),
 --   activando uno y desactivando los demás. Ajusta las posiciones POS_* si cambia el orden.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/monitor_toggle3.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/monitor_toggle3.lua
 
 -- TOGGLE 3 monitoring plugins
 -- SET THE POSITION OF THE PLUGINS ON MONITORING CHANNEL 

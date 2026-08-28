@@ -7,7 +7,7 @@
 --   Alterna el bypass del plugin DIM (dim/atenuación) en la cadena de monitorización
 --   del canal máster. Ajusta POS_DIM si cambia el orden.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/monotor_dim.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/monotor_dim.lua
 
 -- BYPASS DIM plugin
 -- SET THE POSITION OF THE PLUGINS ON MONITORING CHANNEL

@@ -7,7 +7,7 @@
 --   Revierte un freeze con ReaInsert: pone offline los FX activos de la pista original,
 --   apaga su ruteo (sends y master send) y deja que la pista FREEZE alimente los sends.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/desarma_freeze.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/desarma_freeze.lua
 
 -- === OPTIONS ===
 local DELETE_PRINT_SEND_INSTEAD_OF_MUTING = false  -- true = borra el send original->FREEZE, false = solo lo mutea

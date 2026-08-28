@@ -9,7 +9,7 @@
 --   coros (GBV) y ruteo automático por prefijo de nombre (guitarras, voces, instrumentos, bajos).
 --   Aplica colores y reordena las pistas en un orden predefinido.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/setea_B.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/setea_B.lua
 
 --[[
  * ReaScript Name: Estructura de mezcla completa con ruteo automático

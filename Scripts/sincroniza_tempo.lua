@@ -7,7 +7,7 @@
 --   Muestra en una caja las duraciones en milisegundos de las divisiones rítmicas
 --   (1/1 a 1/32, tercillos y puntillos) al BPM actual del proyecto.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/sincroniza_tempo.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/sincroniza_tempo.lua
 
 -- THIS SCRIPT IS A MESSAGE TO KNOW HOW MANY MILISECONDS USE ON DELAYS OR RELEASES
 

@@ -7,7 +7,7 @@
 --   Muestra u oculta la ventana del plugin Tonal Balance Control en la cadena de monitorización
 --   del canal máster. Ajusta POS_TONAL si cambia el orden.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/monitor_tonal_balance.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/monitor_tonal_balance.lua
 
 -- TOGGLE VISIBILITY OF TONAL BALANCE CONTROL
 local POS_TONAL = 2

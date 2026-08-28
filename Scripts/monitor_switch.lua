@@ -1,16 +1,16 @@
--- @description Monitor: bypass Sonarworks y Sienna
+-- @description Monitor: alternar Sonarworks / Sienna
 -- @author Patricio Maripani Navarro
 -- @version 1.0
 -- @changelog
 --   + Release ReaPack
 -- @about
---   Alterna el bypass de los plugins Sonarworks y Sienna de la cadena de monitorización
---   del canal máster. Ajusta las posiciones POS_SONARWORKS / POS_SIENNA si cambia el orden.
+--   Alterna entre Sonarworks y Sienna en la cadena de monitorización del canal máster:
+--   activa uno y desactiva el otro. Ajusta POS_SONARWORKS / POS_SIENNA si cambia el orden.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/monitor_off.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/monitor_switch.lua
 
--- BYPASS SIENNA AND SONARWORKS
--- SET THE POSITION OF THE PLUGINS ON MONITORING CHANNEL
+-- TOGGLE SIENNA AND SONARWORKS 
+-- SET THE POSITION OF THE PLUGINS ON MONITORING CHANNEL 
 local POS_SONARWORKS = 4 
 local POS_SIENNA = 5
 
@@ -22,10 +22,11 @@ if POS_SONARWORKS <= cnt  then
   POS_SIENNA = (0x1000000 + (POS_SIENNA-1))
 
   local enabledSONARWORKS = reaper.TrackFX_GetEnabled(track, POS_SONARWORKS)
+  local enabledSIENNA = reaper.TrackFX_GetEnabled(track, POS_SIENNA)
   
   if enabledSONARWORKS then 
     reaper.TrackFX_SetEnabled(track, POS_SONARWORKS, false)
-    reaper.TrackFX_SetEnabled(track, POS_SIENNA, false)
+    reaper.TrackFX_SetEnabled(track, POS_SIENNA, true)
   else
     reaper.TrackFX_SetEnabled(track, POS_SONARWORKS, true)
     reaper.TrackFX_SetEnabled(track, POS_SIENNA, false)
