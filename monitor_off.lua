@@ -1,3 +1,14 @@
+-- @description Monitor: bypass Sonarworks y Sienna
+-- @author Patricio Maripani Navarro
+-- @version 1.0
+-- @changelog
+--   + Release ReaPack
+-- @about
+--   Alterna el bypass de los plugins Sonarworks y Sienna de la cadena de monitorización
+--   del canal máster. Ajusta las posiciones POS_SONARWORKS / POS_SIENNA si cambia el orden.
+-- @website https://github.com/enemigo/enemigo-reaper-scripts
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/monitor_off.lua
+
 -- BYPASS SIENNA AND SONARWORKS
 -- SET THE POSITION OF THE PLUGINS ON MONITORING CHANNEL
 local POS_SONARWORKS = 4 

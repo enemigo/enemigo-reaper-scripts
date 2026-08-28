@@ -1,3 +1,14 @@
+-- @description Enviar pistas seleccionadas a la primera (sin duplicar envíos y replicando color)
+-- @author Patricio Maripani Navarro
+-- @version 1.1
+-- @changelog
+--   + Release ReaPack
+-- @about
+--   Con varias pistas seleccionadas, enruta todas a la primera: desactiva su master send,
+--   copia el color de la pista destino y crea el envío solo si no existe (no duplica).
+-- @website https://github.com/enemigo/enemigo-reaper-scripts
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/rutea_a_seleccionado.lua
+
 --[[
  * ReaScript Name: Enviar pistas seleccionadas a la primera (sin duplicar envíos y replicando color)
  * Description: 

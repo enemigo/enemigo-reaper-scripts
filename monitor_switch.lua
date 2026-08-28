@@ -1,3 +1,14 @@
+-- @description Monitor: alternar Sonarworks / Sienna
+-- @author Patricio Maripani Navarro
+-- @version 1.0
+-- @changelog
+--   + Release ReaPack
+-- @about
+--   Alterna entre Sonarworks y Sienna en la cadena de monitorización del canal máster:
+--   activa uno y desactiva el otro. Ajusta POS_SONARWORKS / POS_SIENNA si cambia el orden.
+-- @website https://github.com/enemigo/enemigo-reaper-scripts
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/monitor_switch.lua
+
 -- TOGGLE SIENNA AND SONARWORKS 
 -- SET THE POSITION OF THE PLUGINS ON MONITORING CHANNEL 
 local POS_SONARWORKS = 4 

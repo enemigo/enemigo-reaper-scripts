@@ -1,3 +1,15 @@
+-- @description Toggle select + solo BUS (creación si no existe)
+-- @author Patricio Maripani Navarro
+-- @version 1.5
+-- @changelog
+--   + Release ReaPack
+-- @about
+--   Busca un bus por coincidencia difusa de nombre (variable busName), lo crea si no existe,
+--   des-solo el resto de pistas y deja solo ese bus, trayéndolo a la vista.
+-- @requires SWS/S&M Extension
+-- @website https://github.com/enemigo/enemigo-reaper-scripts
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/solo_bus_a.lua
+
 --[[
  * ReaScript Name: Toggle Select and Solo BUS (con creación si no existe)
  * Description: Valida si existe una pista (bus) cuyo nombre contenga el nombre definido en la variable "busName". 

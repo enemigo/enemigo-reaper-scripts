@@ -1,7 +1,14 @@
 -- @description AUTO FREEZE ReaInsert (copy routing, color, MASTER SEND state, smart mono/stereo, go to 0 and RECORD)
--- @version FINAL
--- @author Reaper DAW Ultimate Assistant
+-- @author Patricio Maripani Navarro
+-- @version 1.0
+-- @changelog
+--   + Release ReaPack
+-- @about
+--   Crea pistas FREEZE bajo las que tienen un ReaInsert activo, copiando color, canales,
+--   estado de master send y sends. Decide mono/estéreo de forma inteligente y graba desde el inicio.
 -- @requires SWS Extension
+-- @website https://github.com/enemigo/enemigo-reaper-scripts
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/freeze_reainsert.lua
 
 -------------------------------------------------------
 -- Detect active ReaInsert

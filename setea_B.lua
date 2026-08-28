@@ -1,3 +1,16 @@
+-- @description Estructura de mezcla completa con ruteo automático (batería, grupos, voces, guitarras, bajos)
+-- @author Patricio Maripani Navarro
+-- @version 4.0
+-- @changelog
+--   + Release ReaPack
+-- @about
+--   Crea/actualiza la estructura de ruteo de una mezcla: pistas y buses de batería (Kick In/Out,
+--   Snare, Toms, OH, Room), grupos A/B/C/D, buses de voz (VOX, VDelay, VRoom, VHall, VPlate),
+--   coros (GBV) y ruteo automático por prefijo de nombre (guitarras, voces, instrumentos, bajos).
+--   Aplica colores y reordena las pistas en un orden predefinido.
+-- @website https://github.com/enemigo/enemigo-reaper-scripts
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/setea_B.lua
+
 --[[
  * ReaScript Name: Estructura de mezcla completa con ruteo automático
  * Description:
