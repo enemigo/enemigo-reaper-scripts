@@ -1,8 +1,12 @@
 -- @description Estructura de mezcla completa con ruteo automático (batería, grupos, voces, guitarras, bajos)
 -- @author Patricio Maripani Navarro
--- @version 4.0
+-- @version 4.1
 -- @changelog
---   + Release ReaPack
+--   + Todo el proceso en un único bloque de Undo (deshacer de una vez)
+--   + Opción "modo seco" (REORDER_TRACKS = false): no reordena pistas
+--   + Ignora pistas MIDI en el ruteo automático por prefijo
+--   + PreventUIRefresh al reordenar
+--   + Nuevos alias de reconocimiento (kick, bombo, snare trg, etc.)
 -- @about
 --   Crea/actualiza la estructura de ruteo de una mezcla: pistas y buses de batería (Kick In/Out,
 --   Snare, Toms, OH, Room), grupos A/B/C/D, buses de voz (VOX, VDelay, VRoom, VHall, VPlate),
@@ -11,44 +15,35 @@
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
 -- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/setea_B.lua
 
---[[
- * ReaScript Name: Estructura de mezcla completa con ruteo automático
- * Description:
- * Crea una estructura de ruteo para baterías, reconociendo múltiples micrófonos
- * por instrumento (ej. Kick In/Out). Si las pistas ya existen bajo sus nombres
- * estándar o alias, se actualizan sus ruteos. Al final, crea buses de mezcla,
- * rutea guitarras, voces, bajos e instrumentos a sus respectivos buses y
- * ordena todas las pistas en un orden predefinido.
- * Author: Patricio Maripani Navarro (Modificado por Gemini)
- * Licence: Public Domain
- * Version: 4.0
---]]
+--------------------------------------------------------------------------------
+-- CONFIG
+--------------------------------------------------------------------------------
+local REORDER_TRACKS = true  -- false = modo seco: crea/rutea pero no reordena
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- CONFIGURACIÓN DE ALIAS
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 local trackAliases = {
     -- Se manejan dos bombos de forma independiente
-    KICK_IN       = {"kick_in", "bombo_in", "k_in"},
+    KICK_IN       = {"kick_in", "bombo_in", "k_in", "kick_in_mic", "bombo"},
     KICK_OUT      = {"kick_out", "bombo_out", "k_out"},
-    SNARE_TOP     = {"snare_top", "snare", "snare_up", "caja_arriba", "caja", "snare sample", "snare trg"},
+    SNARE_TOP     = {"snare_top", "snare", "snare_up", "caja_arriba", "caja", "snare sample", "snare trg", "snare_top_mic"},
     -- Se agrega "snare_bot" para reconocer la pista del usuario
-    SNARE_BOTTOM  = {"snare_bottom", "snare_down", "caja_abajo", "snare_bot"},
-    SNARE_REV     = {"snare_rev", "reverb caja"},
+    SNARE_BOTTOM  = {"snare_bottom", "snare_down", "caja_abajo", "snare_bot", "snare_bottom_mic"},
+    SNARE_REV     = {"snare_rev", "reverb caja", "snare reverb"},
     OHL           = {"ohl", "oh l", "overhead l"},
     OHR           = {"ohr", "oh r", "overhead r"},
-    TOM1          = {"tom1", "t1", "tom 1"},
-    TOM2          = {"tom2", "t2", "tom 2"},
-    TOM3          = {"tom3", "t3", "tom 3"},
+    TOM1          = {"tom1", "t1", "tom 1", "tom_hi"},
+    TOM2          = {"tom2", "t2", "tom 2", "tom_mid"},
+    TOM3          = {"tom3", "t3", "tom 3", "tom_low", "floor tom"},
     ROOM          = {"room", "sala", "ambiente", "room_chil"}, -- Se añade alias para "ROOM_CHIL"
     -- Se agrega "room_com" para reconocer el typo común
     ROOM_COMP     = {"room_comp", "room c", "sala comp", "room_com"}
 }
 
-
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- CONFIGURACIÓN GENERAL
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Color morado para la batería (RGB: 128, 0, 128)
 local purpleColor = reaper.ColorToNative(128, 0, 128)
 -- Color gris claro para los grupos A,C,D (RGB: 200, 200, 200)
@@ -66,9 +61,9 @@ local darkGreenColor = reaper.ColorToNative(0, 100, 0)
 -- Color amarillo para el bajo (RGB: 255, 255, 0)
 local yellowColor = reaper.ColorToNative(255, 255, 0)
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- FUNCIONES AUXILIARES
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- Nueva función para validar si un objeto de pista es válido
 local function isValidTrack(tr)
@@ -76,6 +71,26 @@ local function isValidTrack(tr)
         return true
     end
     return false
+end
+
+-- ¿La pista contiene solo MIDI (o ningún item de audio)?
+local function isMidiTrack(tr)
+    local item_count = reaper.CountTrackMediaItems(tr)
+    if item_count == 0 then return false end
+    local has_audio = false
+    for i = 0, item_count - 1 do
+        local item = reaper.GetTrackMediaItem(tr, i)
+        local take = reaper.GetActiveTake(item)
+        if take then
+            if reaper.TakeIsMIDI(take) then
+                -- sigue mirando; un take MIDI no descarta la pista si hay audio
+            else
+                has_audio = true
+            end
+        end
+    end
+    -- Es MIDI si tiene ítems pero ninguno es audio
+    return not has_audio
 end
 
 -- Crea una pista al final y le asigna nombre y color
@@ -103,13 +118,13 @@ local function getOrCreateTrackByAliases(canonicalName, aliases, color)
     if isValidTrack(tr) then
       local _, tname = reaper.GetSetMediaTrackInfo_String(tr, "P_NAME", "", false)
       local tname_lower = string.lower(tname)
-      
+
       -- Primero, buscar coincidencia con el nombre canónico
       if tname_lower == canonicalNameLower then
         if color then reaper.SetTrackColor(tr, color) end -- Asegurar el color
         return tr
       end
-      
+
       -- Segundo, buscar coincidencia con algún alias de la lista
       if aliases then
         for _, alias in ipairs(aliases) do
@@ -122,7 +137,7 @@ local function getOrCreateTrackByAliases(canonicalName, aliases, color)
       end
     end
   end
-  
+
   -- 2. Si no se encontró ninguna pista, crear una nueva
   return insertTrack(canonicalName, color)
 end
@@ -148,11 +163,11 @@ local function configureTrack(tr, pan)
   end
 end
 
--------------------------------------------------------------------------------
--- FASE FINAL: ORDENAR TODAS LAS PISTAS (se ejecuta en un ciclo separado)
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- FASE FINAL: ORDENAR TODAS LAS PISTAS
+--------------------------------------------------------------------------------
 function reorderAllTracks()
-    reaper.Undo_BeginBlock()
+    reaper.PreventUIRefresh(1)
 
     -- Primero, deseleccionar todo
     reaper.Main_OnCommand(40289, 0) -- Action: "Track: Unselect all tracks"
@@ -164,7 +179,7 @@ function reorderAllTracks()
     for i = #groupNames, 1, -1 do
         local groupName = groupNames[i]
         local color = greyColor -- Color por defecto para A, C, D
-        
+
         if groupName == "B" then
           color = purpleColor -- "B" es el bus de batería
         elseif vocalBuses[groupName] then
@@ -207,16 +222,17 @@ function reorderAllTracks()
             targetIdx = targetIdx + 1
         end
     end
-    
+
     -- Deseleccionar todo al final
     reaper.Main_OnCommand(40289, 0) -- Action: "Track: Unselect all tracks"
-    reaper.Undo_EndBlock("Ordenar pistas de Batería y Grupos", -1)
+    reaper.PreventUIRefresh(-1)
 end
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- FASE INICIAL: CREAR Y RUTEAR PISTAS
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 function setupAndRouteTracks()
+  -- TODO el proceso en un único bloque de Undo
   reaper.Undo_BeginBlock()
 
   -- OBTENER O CREAR TODAS LAS PISTAS DE BATERÍA
@@ -276,10 +292,8 @@ function setupAndRouteTracks()
   ensureSend(trackROOM, trackGDRUM)
   configureTrack(trackROOM_COMP)
   ensureSend(trackROOM_COMP, trackGDRUM)
-  reaper.Undo_EndBlock("Crear y rutear estructura de batería", -1)
 
   -- FASE ADICIONAL: RUTEAR PISTAS DE GUITARRA A GRUPO "C"
-  reaper.Undo_BeginBlock()
   local trackC = getOrCreateTrackByAliases("C", nil, greyColor)
   local count = reaper.CountTracks(0)
   for i = 0, count - 1 do
@@ -287,7 +301,7 @@ function setupAndRouteTracks()
     if isValidTrack(tr) then
       local _, tname = reaper.GetSetMediaTrackInfo_String(tr, "P_NAME", "", false)
       if tname and string.sub(tname, 1, 1):lower() == 'g' then
-        if tname:upper() ~= "GDRUM" and tname:upper() ~= "GBV" and reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 then
+        if tname:upper() ~= "GDRUM" and tname:upper() ~= "GBV" and not isMidiTrack(tr) and reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 then
           reaper.SetMediaTrackInfo_Value(tr, "B_MAINSEND", 0)
           ensureSend(tr, trackC)
           reaper.SetTrackColor(tr, orangeColor)
@@ -295,10 +309,8 @@ function setupAndRouteTracks()
       end
     end
   end
-  reaper.Undo_EndBlock("Rutear guitarras a Grupo C", -1)
 
   -- FASE ADICIONAL: RUTEAR PISTAS DE VOZ A GRUPO "VOX"
-  reaper.Undo_BeginBlock()
   local trackVOX = getOrCreateTrackByAliases("VOX", nil, blueBusColor)
   local exceptionsVOX = {violin=true, violines=true, viola=true}
   count = reaper.CountTracks(0)
@@ -307,7 +319,7 @@ function setupAndRouteTracks()
     if isValidTrack(tr) then
       local _, tname = reaper.GetSetMediaTrackInfo_String(tr, "P_NAME", "", false)
       if tname and string.sub(tname, 1, 1):lower() == 'v' then
-        if not exceptionsVOX[tname:lower()] and tname:upper() ~= "VOX" and reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 then
+        if not exceptionsVOX[tname:lower()] and tname:upper() ~= "VOX" and not isMidiTrack(tr) and reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 then
           reaper.SetMediaTrackInfo_Value(tr, "B_MAINSEND", 0)
           ensureSend(tr, trackVOX)
           reaper.SetTrackColor(tr, blueTrackColor)
@@ -315,10 +327,8 @@ function setupAndRouteTracks()
       end
     end
   end
-  reaper.Undo_EndBlock("Rutear voces a Grupo VOX", -1)
 
   -- FASE ADICIONAL: RUTEAR PISTAS DE INSTRUMENTOS A GRUPO "A"
-  reaper.Undo_BeginBlock()
   local trackA = getOrCreateTrackByAliases("A", nil, greyColor)
   local instrumentPrefixes = {"piano", "keyboard", "cuerdas", "sintes", "synth", "sintetizador", "pad", "keys", "strings", "rhodes", "wurli", "organ", "organo", "cellos", "cello", "orquesta", "trompetas", "horns", "horn", "rhode"}
   count = reaper.CountTracks(0)
@@ -326,23 +336,21 @@ function setupAndRouteTracks()
     local tr = reaper.GetTrack(0, i)
     if isValidTrack(tr) then
       local _, tname = reaper.GetSetMediaTrackInfo_String(tr, "P_NAME", "", false)
-      if tname and reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 then
+      if tname and reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 and not isMidiTrack(tr) then
         local tname_lower = tname:lower()
         for _, prefix in ipairs(instrumentPrefixes) do
           if string.sub(tname_lower, 1, #prefix) == prefix then
             reaper.SetMediaTrackInfo_Value(tr, "B_MAINSEND", 0)
             ensureSend(tr, trackA)
             reaper.SetTrackColor(tr, pinkColor)
-            break 
+            break
           end
         end
       end
     end
   end
-  reaper.Undo_EndBlock("Rutear instrumentos a Grupo A", -1)
 
   -- FASE ADICIONAL: CREAR Y RUTEAR BUSES DE EFECTOS DE VOZ A "VOX"
-  reaper.Undo_BeginBlock()
   local trackVOX_for_sends = getOrCreateTrackByAliases("VOX", nil, blueBusColor)
   local trackVDelay = getOrCreateTrackByAliases("VDelay", nil, blueBusColor)
   local trackVRoom = getOrCreateTrackByAliases("VRoom", nil, blueBusColor)
@@ -356,18 +364,14 @@ function setupAndRouteTracks()
   configureTrack(trackVHall)
   ensureSend(trackVPlate, trackVOX_for_sends)
   configureTrack(trackVPlate)
-  reaper.Undo_EndBlock("Crear y rutear buses de efectos de voz", -1)
 
   -- FASE ADICIONAL: CREAR Y RUTEAR BUS DE COROS "GBV" A GRUPO "A"
-  reaper.Undo_BeginBlock()
   local trackA_for_gbv = getOrCreateTrackByAliases("A", nil, greyColor)
   local trackGBV = getOrCreateTrackByAliases("GBV", nil, darkGreenColor)
   ensureSend(trackGBV, trackA_for_gbv)
   configureTrack(trackGBV)
-  reaper.Undo_EndBlock("Crear y rutear bus de coros GBV", -1)
 
   -- FASE ADICIONAL: RUTEAR PISTAS DE COROS A GRUPO "GBV"
-  reaper.Undo_BeginBlock()
   local trackGBV_for_bv = getOrCreateTrackByAliases("GBV", nil, darkGreenColor)
   count = reaper.CountTracks(0)
   for i = 0, count - 1 do
@@ -375,7 +379,7 @@ function setupAndRouteTracks()
     if isValidTrack(tr) then
       local _, tname = reaper.GetSetMediaTrackInfo_String(tr, "P_NAME", "", false)
       if tname and string.sub(tname, 1, 2):lower() == 'bv' then
-        if reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 then
+        if reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 and not isMidiTrack(tr) then
           reaper.SetMediaTrackInfo_Value(tr, "B_MAINSEND", 0)
           ensureSend(tr, trackGBV_for_bv)
           reaper.SetTrackColor(tr, darkGreenColor)
@@ -383,10 +387,8 @@ function setupAndRouteTracks()
       end
     end
   end
-  reaper.Undo_EndBlock("Rutear coros a Grupo GBV", -1)
-  
+
   -- FASE ADICIONAL: RUTEAR PISTAS DE BAJO A GRUPO "B"
-  reaper.Undo_BeginBlock()
   local trackB_for_bass = getOrCreateTrackByAliases("B", nil, purpleColor)
   count = reaper.CountTracks(0)
   for i = 0, count - 1 do
@@ -394,7 +396,7 @@ function setupAndRouteTracks()
     if isValidTrack(tr) then
       local _, tname = reaper.GetSetMediaTrackInfo_String(tr, "P_NAME", "", false)
       if tname and string.sub(tname, 1, 4):lower() == 'bajo' then
-        if reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 then
+        if reaper.GetMediaTrackInfo_Value(tr, "B_MAINSEND") == 1 and not isMidiTrack(tr) then
           reaper.SetMediaTrackInfo_Value(tr, "B_MAINSEND", 0)
           ensureSend(tr, trackB_for_bass)
           reaper.SetTrackColor(tr, yellowColor)
@@ -402,14 +404,15 @@ function setupAndRouteTracks()
       end
     end
   end
-  reaper.Undo_EndBlock("Rutear bajos a Grupo B", -1)
 
+  if REORDER_TRACKS then
+    reorderAllTracks()
+  end
 
-  reaper.defer(reorderAllTracks)
+  reaper.Undo_EndBlock("setea_B: estructura de mezcla completa", -1)
 end
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- PUNTO DE ENTRADA
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 reaper.defer(setupAndRouteTracks)
-
