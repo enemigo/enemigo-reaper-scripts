@@ -65,7 +65,10 @@ Cada idea puede marcarse como `[ ]` pendiente o `[x]` hecha.
 
 ## General / infraestructura
 
-- [ ] Headers `@changelog`, `@about`, `@provides` consistentes para ReaPack.
+- [x] Headers `@changelog`, `@about`, `@provides` consistentes para ReaPack.
+- [x] Generar `index.xml` con `reapack-index` (requiere Ruby + gem + pandoc).
+- [x] Mover scripts a `Scripts/` (categoría ReaPack; los archivos en la raíz no se indexan).
+- [ ] Revisar la ruta de instalación en REAPER: los atajos actuales apuntan a otra ruta; al instalar por ReaPack habrá que re-mapear una vez.
 - [ ] Revisar headers de versión/autor en todos los scripts.
 - [ ] Verificar precondiciones con mensajes de error en español coherentes.
 - [ ] Consistencia de estilos: indentación, nombres de funciones, español/inglés en comentarios.

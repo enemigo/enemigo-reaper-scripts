@@ -62,12 +62,42 @@ Alternan plugins de la cadena de monitorización del máster, actualizando el hi
 
 ## Instalación
 
-Cómo instalar: https://forums.cockos.com/showpost.php?p=2190641&postcount=12
+### Opción A — ReaPack (recomendado)
 
-Instalación manual:
+El repo está preparado como repositorio ReaPack (`index.xml` en la raíz). Requiere la extensión [ReaPack](https://reapack.com).
+
+1. En REAPER: *Extensions → ReaPack → Manage repositories…*.
+2. Añade el repo con **Import repositories…** usando la URL:
+   - Repo público: `https://github.com/enemigo/enemigo-reaper-scripts/raw/main/index.xml`
+   - Carpeta local (recomendado para uso privado): la ruta local del repo, ej. `/Users/patricio/Dropbox/ProyectosIA/Reaper`.
+3. *Extensions → ReaPack → Browse packages…* y marca los paquetes de la categoría **Scripts**.
+4. *Apply changes* para descargarlos e instalarlos.
+5. Carga las acciones desde la **Action List** y asígnalas a atajos/toolbars.
+
+Para actualizar tras nuevos commits: *ReaPack → Synchronize packages*.
+
+> **Sobre tus atajos ya configurados:** si ya tenías estas acciones mapeadas apuntando a otra ruta, ReaPack las instalará en `Scripts/ReaPack/…` y REAPER las verá como **acciones nuevas** (duplicadas). Deberás re-mapear **una vez**; las actualizaciones posteriores conservan los atajos. No borra nada que no gestione él mismo.
+
+### Opción B — Manual
 
 1. Copia los archivos `.lua` a una (sub)carpeta de la carpeta **Scripts** de tu ruta de recursos de REAPER (*Options → Show REAPER resource path…*).
 2. Carga cada archivo desde la **Action List** en la sección `[Main]`.
 3. Asigna las acciones a atajos de teclado, botones de toolbar, menús, etc.
 
 > **Nota:** verifica las posiciones (`POS_*`) de los plugins de monitorización y, para el freeze, que cada pista FREEZE quede justo debajo de su original.
+
+---
+
+## Mantenimiento del repo (para el autor)
+
+Regenerar `index.xml` tras nuevos commits (requiere Ruby + `gem install reapack-index` + pandoc):
+
+```sh
+export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/4.0.0/bin:$PATH"
+git add -A && git commit -m "…"      # los cambios deben estar commiteados
+reapack-index --name 'enemigo-reaper-scripts'
+git add index.xml && git commit -m "Update index.xml"
+git push
+```
+
+El `index.xml` apunta a `https://github.com/enemigo/enemigo-reaper-scripts/raw/…`; si el repo es privado, usa la **carpeta local** como repositorio en ReaPack.
