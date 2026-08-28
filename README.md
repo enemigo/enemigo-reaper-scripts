@@ -52,11 +52,11 @@ Alternan plugins de la cadena de monitorización del máster, actualizando el hi
 
 - **`rutea_a_seleccionado.lua`** — Con varias pistas seleccionadas, enruta **todas a la primera seleccionada**: desactiva su Master send, les asigna el color de la pista destino y crea el send solo si no existe (no duplica).
 
-- **`solo_bus_a.lua`** — Toggle de **selección y solo de un bus** (por defecto `busName = "A"`). Busca por coincidencia difusa de nombre (con puntuación), crea el bus si no existe, des-solo el resto y lo trae a la vista. La variable `busName` se puede cambiar para cualquier bus.
+- **`solo_bus_a.lua`** — Paquete **Solo bus** con 5 acciones: `solo_bus_a/b/c/d/vox.lua` (bus "A", "B", "C", "D" y "VOX"), cada una con su propio atajo. Toggle de **selección y solo del bus**: busca por coincidencia difusa de nombre, crea el bus si no existe, des-solo el resto y lo trae a la vista. Lógica compartida en `solo_bus_lib.lua`.
 
 ### Utilidades
 
-- **`sincroniza_tempo.lua`** — Muestra una caja con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/32, tercillos y puntillos) al BPM actual del proyecto, para ajustar delays/release.
+- **`sincroniza_tempo.lua`** — Ventana interactiva (**ReaImGui**) con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. BPM editable en vivo, soporte de **tempo maps** (varias secciones) y botón para **copiar al portapapeles**. Requiere [ReaImGui](https://github.com/cfillion/reaimgui) (ReaPack: ReaTeam Extensions).
 
 ---
 
