@@ -1,7 +1,8 @@
 -- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (toggle + tap tempo)
 -- @author Patricio Maripani Navarro
--- @version 3.3
+-- @version 3.4
 -- @changelog
+--   + Fix: usar reaper.defer (no gfx.defer) para el loop
 --   + Fix: usar la API gfx global (no reaper.gfx)
 --   + Prefijo pmn_ en el nombre de acción
 --   + Ventana gfx nativa (sin dependencias) con toggle: disparar abre/cierra
@@ -163,7 +164,7 @@ local function loop()
   gfx.y = btn_y + 12
   gfx.drawstr(tap_status)
 
-  gfx.defer(loop)
+  reaper.defer(loop)
 end
 
-gfx.defer(loop)
+reaper.defer(loop)
