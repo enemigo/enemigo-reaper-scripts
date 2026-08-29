@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="b58076e1d52573d2f8ae62091e95be774a6a0cb4">
+<index version="1" name="enemigo-reaper-scripts" commit="632701ef6376999c9e956f8ce539183c38d1ba8e">
   <category name="Scripts">
     <reapack name="pmn_compara_fx.lua" type="script" desc="pmn_Compara FX: A/B switch de la cadena FX de la pista seleccionada">
       <metadata>
@@ -407,6 +407,23 @@
         <source main="main" file="pmn_solo_bus_c.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_c.lua</source>
         <source main="main" file="pmn_solo_bus_d.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_d.lua</source>
         <source main="main" file="pmn_solo_bus_vox.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_vox.lua</source>
+      </version>
+    </reapack>
+    <reapack name="pmn_toggle_fx.lua" type="script" desc="pmn_Toggle FX: alternar bypass del último FX tocado">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Alterna el bypass del \u250 ?ltimo FX que tocaste (el enfocado, con su ventana abierta en la cadena FX de una pista). No requiere tener la pista seleccionada.\par}
+}
+]]></description>
+        <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
+      </metadata>
+      <version name="5.1" author="Patricio Maripani Navarro" time="2026-08-29T22:40:04Z">
+        <changelog><![CDATA[+ Fix: track local (evita variable global)
++ Alterna el bypass del último FX enfocado/tocado]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/632701ef6376999c9e956f8ce539183c38d1ba8e/Scripts/pmn_toggle_fx.lua</source>
       </version>
     </reapack>
   </category>
