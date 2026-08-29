@@ -1,7 +1,8 @@
 -- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (toggle + tap tempo)
 -- @author Patricio Maripani Navarro
--- @version 3.2
+-- @version 3.3
 -- @changelog
+--   + Fix: usar la API gfx global (no reaper.gfx)
 --   + Prefijo pmn_ en el nombre de acción
 --   + Ventana gfx nativa (sin dependencias) con toggle: disparar abre/cierra
 --   + Botón TAP tempo: calcula el BPM al hacer clic (solo muestra, no modifica el proyecto)
@@ -71,7 +72,7 @@ local EXT_KEY = "open"
 if reaper.GetExtState(EXT_SECTION, EXT_KEY) == "1" then
   -- Cerrar (segundo disparo)
   reaper.SetExtState(EXT_SECTION, EXT_KEY, "0", true)
-  reaper.gfx.quit()
+  gfx.quit()
   return
 end
 
@@ -93,8 +94,8 @@ local w = 260
 local h = #lines * LINE_H + MARGIN * 2 + BTN_Y_GAP + BTN_H
 if h < 180 then h = 180 end
 
-reaper.gfx.init("Sincroniza tempo", w, h, 0, 100, 100)
-reaper.gfx.setfont(1, "monospace", 12)
+gfx.init("Sincroniza tempo", w, h, 0, 100, 100)
+gfx.setfont(1, "monospace", 12)
 
 local btn_x = MARGIN
 local btn_y = h - MARGIN - BTN_H
@@ -108,21 +109,21 @@ local prev_mouse_cap = 0
 
 local function loop()
   -- Cerrar si el usuario tocó la X o se disparó el toggle
-  if not reaper.gfx.update() or reaper.GetExtState(EXT_SECTION, EXT_KEY) ~= "1" then
+  if not gfx.update() or reaper.GetExtState(EXT_SECTION, EXT_KEY) ~= "1" then
     reaper.SetExtState(EXT_SECTION, EXT_KEY, "0", true)
-    reaper.gfx.quit()
+    gfx.quit()
     return
   end
 
-  reaper.gfx.setfont(1, "monospace", 12)
+  gfx.setfont(1, "monospace", 12)
 
   -- Detectar clic (flanco ascendente del botón izquierdo)
-  local mc = reaper.gfx.mouse_cap or 0
+  local mc = gfx.mouse_cap or 0
   local click = (mc % 2 == 1) and (prev_mouse_cap % 2 == 0)
   prev_mouse_cap = mc
 
   if click then
-    local mx, my = reaper.gfx.mouse_x or 0, reaper.gfx.mouse_y or 0
+    local mx, my = gfx.mouse_x or 0, gfx.mouse_y or 0
     if mx >= btn_x and mx <= btn_x + btn_w and my >= btn_y and my <= btn_y + BTN_H then
       local now = reaper.time_precise()
       if last_tap > 0 then
@@ -144,25 +145,25 @@ local function loop()
   end
 
   -- Texto de las divisiones
-  reaper.gfx.setcolor(230, 230, 230, 255)
+  gfx.setcolor(230, 230, 230, 255)
   local y = MARGIN
   for _, ln in ipairs(lines) do
-    reaper.gfx.x = MARGIN
-    reaper.gfx.y = y
-    reaper.gfx.drawstr(ln)
+    gfx.x = MARGIN
+    gfx.y = y
+    gfx.drawstr(ln)
     y = y + LINE_H
   end
 
   -- Botón TAP
-  reaper.gfx.setcolor(70, 110, 170, 255)
-  reaper.gfx.rect(btn_x, btn_y, btn_w, BTN_H, 1)   -- relleno
-  reaper.gfx.setcolor(210, 220, 240, 255)
-  reaper.gfx.rect(btn_x, btn_y, btn_w, BTN_H, 0)   -- borde
-  reaper.gfx.x = btn_x + MARGIN
-  reaper.gfx.y = btn_y + 12
-  reaper.gfx.drawstr(tap_status)
+  gfx.setcolor(70, 110, 170, 255)
+  gfx.rect(btn_x, btn_y, btn_w, BTN_H, 1)   -- relleno
+  gfx.setcolor(210, 220, 240, 255)
+  gfx.rect(btn_x, btn_y, btn_w, BTN_H, 0)   -- borde
+  gfx.x = btn_x + MARGIN
+  gfx.y = btn_y + 12
+  gfx.drawstr(tap_status)
 
-  reaper.defer(loop)
+  gfx.defer(loop)
 end
 
-reaper.defer(loop)
+gfx.defer(loop)
