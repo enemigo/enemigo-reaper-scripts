@@ -1,6 +1,6 @@
 -- @description pmn_Toggle FX: toggle bypass del último FX flotante enfocado
 -- @author Patricio Maripani Navarro
--- @version 1.0
+-- @version 5.0
 -- @changelog
 --   + Original restaurado
 -- @about
