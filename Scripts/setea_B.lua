@@ -1,6 +1,6 @@
 -- @description pmn_Estructura de mezcla completa con ruteo automático (batería, grupos, voces, guitarras, bajos)
 -- @author Patricio Maripani Navarro
--- @version 4.1
+-- @version 4.2
 -- @changelog
 --   + Todo el proceso en un único bloque de Undo (deshacer de una vez)
 --   + Opción "modo seco" (REORDER_TRACKS = false): no reordena pistas

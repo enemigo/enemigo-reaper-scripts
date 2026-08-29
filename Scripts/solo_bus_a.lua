@@ -1,7 +1,8 @@
 -- @description pmn_Solo bus (A/B/C/D/VOX): toggle select + solo con creación
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
+--   + Prefijo pmn_ en el nombre de acción
 --   + Refactorizado a librería compartida (solo_bus_lib.lua)
 --   + Un script por bus (A/B/C/D/VOX): cada bus con su propia acción/atajo
 --   + Paquete ReaPack único: instala los 5 buses + la librería

@@ -1,6 +1,6 @@
 -- @description pmn_Enviar pistas seleccionadas a la primera (sin duplicar envíos y replicando color)
 -- @author Patricio Maripani Navarro
--- @version 1.2
+-- @version 1.3
 -- @changelog
 --   + Validación de punteros con ValidatePtr
 --   + Reporta cuántas pistas se enrutaron

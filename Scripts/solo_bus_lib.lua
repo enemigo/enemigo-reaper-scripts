@@ -1,6 +1,6 @@
 -- @description pmn_Solo bus: librería compartida (no es una acción)
 -- @author Patricio Maripani Navarro
--- @version 1.0
+-- @version 1.1
 -- @noindex
 -- @about
 --   Librería interna usada por solo_bus_A/B/C/D/VOX. Busca un bus por coincidencia difusa,

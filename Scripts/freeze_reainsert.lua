@@ -1,7 +1,8 @@
 -- @description pmn_AUTO FREEZE ReaInsert (copy routing, color, MASTER SEND state, smart mono/stereo, go to 0 and RECORD)
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
+--   + Prefijo pmn_ en el nombre de acción
 --   + Vacía la cadena FX de la pista FREEZE al crearla
 --   + Maneja el estado de transporte (guarda play/record y lo retoma)
 --   + Verifica tras la grabación que las takes no estén vacías

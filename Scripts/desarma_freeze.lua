@@ -1,7 +1,8 @@
 -- @description pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
+--   + Prefijo pmn_ en el nombre de acción
 --   + Script reversible: guarda el estado previo y permite restaurarlo (MODE = "restore")
 --   + Eliminada redundancia: el send de impresión se gestiona según la config, no duplicado
 --   + Mensajes de error más claros

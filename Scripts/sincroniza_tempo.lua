@@ -1,7 +1,8 @@
 -- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (ReaImGui)
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
+--   + Prefijo pmn_ en el nombre de acción
 --   + Ventana interactiva (ReaImGui) en lugar de ShowMessageBox
 --   + BPM editable en vivo, valores redondeados a 2 decimales
 --   + División 1/64 añadida
