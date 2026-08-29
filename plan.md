@@ -5,7 +5,7 @@ Cada idea puede marcarse como `[ ]` pendiente o `[x]` hecha.
 
 ---
 
-## Monitorización (monitor_off / monitor_switch / monitor_dim / monitor_tonal_balance / monitor_ab)
+## Monitorización (monitor_switch / monitor_tonal_balance / monitor_ab)
 
 - [x] Eliminar `reaper.defer(function() end)` al final (deja el script "vivo" sin motivo).
 - [x] Añadir `reaper.RefreshToolbar2(self, 0)` tras `SetToggleCommandState` para que el highlight del botón se refresque.
@@ -16,7 +16,7 @@ Cada idea puede marcarse como `[ ]` pendiente o `[x]` hecha.
 - [x] **Persistir estado en `SetExtState`**: recordar qué plugin estaba activo entre sesiones y sincronizar el highlight del toolbar al abrir el proyecto.
 - [x] **Fallback por posición**: si no encuentra por nombre, usa `POSITIONS`/`POS_x` configurada.
 - [x] **Toggle robusto en monitor_switch**: si falta un plugin, alterna el existente; error si faltan ambos.
-- [x] Eliminar `monitor_toggle3` y `monitor_mult_sienna` (redundantes con monitor_switch).
+- [x] Eliminar `monitor_toggle3`, `monitor_mult_sienna`, `monitor_off` y `monitor_dim` (no usados/redundantes).
 
 ## Freeze (freeze_reainsert / desarma_freeze)
 
