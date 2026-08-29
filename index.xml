@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="b6e998fd44ab4f2fe593429ec1dc54db02b614b1">
+<index version="1" name="enemigo-reaper-scripts" commit="180f852d6cfbd0403f352bfae4e17f9c281ba9f3">
   <category name="Scripts">
     <reapack name="pmn_compara_fx.lua" type="script" desc="pmn_Compara FX: A/B switch de la cadena FX de la pista seleccionada">
       <metadata>
@@ -415,7 +415,7 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Cuando tienes un FX enfocado en la cadena de la pista, alterna su bypass (activo<->inactivo). Ignora FX offline.\par}
+{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Alterna el bypass del FX enfocado (el que tiene la ventana abierta en la cadena FX). No necesita tener la pista seleccionada.\par}
 }
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
@@ -430,6 +430,13 @@
 + Sin mensajes al terminar
 + Validación de punteros y track local]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/b6e998fd44ab4f2fe593429ec1dc54db02b614b1/Scripts/pmn_toggle_fx.lua</source>
+      </version>
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T19:25:09Z">
+        <changelog><![CDATA[+ No requiere pista seleccionada: usa el FX enfocado (GetFocusedFX + CSurf_TrackFromID)
++ Solo actúa si la ventana del FX está abierta (is_open), como el original
++ Sin mensajes al terminar
++ Ignora FX offline]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/180f852d6cfbd0403f352bfae4e17f9c281ba9f3/Scripts/pmn_toggle_fx.lua</source>
       </version>
     </reapack>
   </category>
