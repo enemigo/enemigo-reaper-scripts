@@ -46,8 +46,6 @@ function main()
   -- Obtener el color de la pista destino
   local destColor = reaper.GetTrackColor(dest)
 
-  local routed = 0
-
   -- Iterar por cada pista seleccionada, exceptuando la primera
   for i = 1, num_sel - 1 do
     local src = reaper.GetSelectedTrack(0, i)
@@ -80,17 +78,11 @@ function main()
         if SEND_PAN then
           reaper.SetTrackSendInfo_Value(src, 0, new_send, "D_PAN", SEND_PAN)
         end
-        routed = routed + 1
       end
     end
   end
 
   reaper.UpdateArrange()
-
-  reaper.ShowConsoleMsg(string.format("Enrutadas %d pista(s) hacia \"%s\".\n", routed, (function()
-    local ok, name = reaper.GetTrackName(dest, "")
-    return ok and name or "destino"
-  end)()))
 end
 
 reaper.Undo_BeginBlock()
