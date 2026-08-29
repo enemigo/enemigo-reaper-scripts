@@ -15,7 +15,7 @@
 --   proyecto tiene tempo map). Permite copiar cada valor al portapapeles.
 -- @requires ReaImGui
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/sincroniza_tempo.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_sincroniza_tempo.lua
 
 --------------------------------------------------------------------------------
 -- Cargar ReaImGui

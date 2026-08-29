@@ -16,7 +16,7 @@ Casi todos los scripts definen una variable `POS_x` con la posición del plugin 
 
 Estos dos scripts forman un par de "imprimir" (freeze) mediante ReaInsert (envío de pista a equipo externo y retorno):
 
-- **`freeze_reainsert.lua`** — **AUTO FREEZE**:
+- **`pmn_freeze_reainsert.lua`** — **AUTO FREEZE**:
   - Detecta pistas con un **ReaInsert activo**.
   - Inserta una pista `FREEZE – <nombre>` justo debajo de cada una.
   - Copia color, canales, estado de Master/Parent send y todos los sends de la original.
@@ -24,7 +24,7 @@ Estos dos scripts forman un par de "imprimir" (freeze) mediante ReaInsert (enví
   - Vuelve al inicio y **grabación**.
   - Requiere la extensión SWS.
 
-- **`desarma_freeze.lua`** — **EXIT Freeze** (deshacer el freeze):
+- **`pmn_desarma_freeze.lua`** — **EXIT Freeze** (deshacer el freeze):
   - Pone **offline** los FX activos de la pista original (incluido el ReaInsert).
   - Desactiva el ruteo de la original: mutea sends y apaga el Master/Parent send.
   - Mutea (o borra, opcional) el send de impresión original → FREEZE.
@@ -35,28 +35,28 @@ Estos dos scripts forman un par de "imprimir" (freeze) mediante ReaInsert (enví
 
 Alternan plugins de la cadena de monitorización del máster, actualizando el highlight del botón de toolbar (toggle). Posiciones: DIM=1, TONAL=2, SONARWORKS=4, SIENNA=5, EXTRA=6.
 
-- **`monitor_switch.lua`** — Alterna entre **Sonarworks** y **Sienna** (activa uno, desactiva el otro).
-- **`monitor_toggle3.lua`** — Cicla por **3 plugins** de monitorización (Sonarworks → Sienna → Extra → Sonarworks...).
-- **`monitor_off.lua`** — Bypass de **Sonarworks y Sienna** (toggle todo encendido / apagado).
-- **`monotor_dim.lua`** — Toggle de bypass del plugin **DIM** (dim/attenuación).
-- **`monitor_tonal_balance.lua`** — Muestra/oculta la ventana del plugin **Tonal Balance Control** (iZotope).
+- **`pmn_monitor_switch.lua`** — Alterna entre **Sonarworks** y **Sienna** (activa uno, desactiva el otro).
+- **`pmn_monitor_toggle3.lua`** — Cicla por **3 plugins** de monitorización (Sonarworks → Sienna → Extra → Sonarworks...).
+- **`pmn_monitor_off.lua`** — Bypass de **Sonarworks y Sienna** (toggle todo encendido / apagado).
+- **`pmn_monotor_dim.lua`** — Toggle de bypass del plugin **DIM** (dim/attenuación).
+- **`pmn_monitor_tonal_balance.lua`** — Muestra/oculta la ventana del plugin **Tonal Balance Control** (iZotope).
 
 ### Ruteo y estructura de mezcla
 
-- **`setea_B.lua`** — El script más grande. Crea la **estructura de mezcla completa**:
+- **`pmn_setea_B.lua`** — El script más grande. Crea la **estructura de mezcla completa**:
   - Reconoce o crea pistas de batería por nombre/alias (`kick_in`, `kick_out`, `snare_top`, `snare_bottom`, `snare_rev`, `ohl`, `ohr`, `tom1..3`, `room`, `room_comp`, `gDrum`, `NY`) con su ruteo típico (OH estéreo con panoramas, Toms con panoramas, etc.).
   - Crea los grupos **A, B (batería, morado), C, D, VOX, GBV** y los buses de efectos vocales (**VDelay, VRoom, VHall, VPlate**).
   - Auto-rutea por prefijo de nombre: guitarras (`g…`) → C, voces (`v…`) → VOX, instrumentos (piano, keys, strings, synths...) → A, coros (`bv…`) → GBV, bajos (`bajo…`) → B.
   - Aplica códigos de color a todo y **reordena las pistas** en un orden predefinido.
   - Idempotente: si las pistas ya existen, actualiza ruteos y colores.
 
-- **`rutea_a_seleccionado.lua`** — Con varias pistas seleccionadas, enruta **todas a la primera seleccionada**: desactiva su Master send, les asigna el color de la pista destino y crea el send solo si no existe (no duplica).
+- **`pmn_rutea_a_seleccionado.lua`** — Con varias pistas seleccionadas, enruta **todas a la primera seleccionada**: desactiva su Master send, les asigna el color de la pista destino y crea el send solo si no existe (no duplica).
 
-- **`solo_bus_a.lua`** — Paquete **Solo bus** con 5 acciones: `solo_bus_a/b/c/d/vox.lua` (bus "A", "B", "C", "D" y "VOX"), cada una con su propio atajo. Toggle de **selección y solo del bus**: busca por coincidencia difusa de nombre, crea el bus si no existe, des-solo el resto y lo trae a la vista. Lógica compartida en `solo_bus_lib.lua`.
+- **`pmn_solo_bus_a.lua`** — Paquete **Solo bus** con 5 acciones: `solo_bus_a/b/c/d/vox.lua` (bus "A", "B", "C", "D" y "VOX"), cada una con su propio atajo. Toggle de **selección y solo del bus**: busca por coincidencia difusa de nombre, crea el bus si no existe, des-solo el resto y lo trae a la vista. Lógica compartida en `pmn_solo_bus_lib.lua`.
 
 ### Utilidades
 
-- **`sincroniza_tempo.lua`** — Ventana interactiva (**ReaImGui**) con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. BPM editable en vivo, soporte de **tempo maps** (varias secciones) y botón para **copiar al portapapeles**. Requiere [ReaImGui](https://github.com/cfillion/reaimgui) (ReaPack: ReaTeam Extensions).
+- **`pmn_sincroniza_tempo.lua`** — Ventana interactiva (**ReaImGui**) con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. BPM editable en vivo, soporte de **tempo maps** (varias secciones) y botón para **copiar al portapapeles**. Requiere [ReaImGui](https://github.com/cfillion/reaimgui) (ReaPack: ReaTeam Extensions).
 
 ---
 

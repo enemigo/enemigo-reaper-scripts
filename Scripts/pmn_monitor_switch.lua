@@ -1,4 +1,4 @@
--- @description pmn_Monitor: alternar 3 plugins (Sonarworks / Sienna / Extra)
+-- @description pmn_Monitor: alternar Sonarworks / Sienna
 -- @author Patricio Maripani Navarro
 -- @version 2.1
 -- @changelog
@@ -7,17 +7,17 @@
 --   + Eliminado reaper.defer() innecesario
 --   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
---   Cicla entre tres plugins de monitorización del máster (Sonarworks, Sienna y Extra),
---   activando uno y desactivando los demás.
+--   Alterna entre los plugins de monitorización A y B (Sonarworks / Sienna) en la cadena
+--   de monitorización del máster: activa uno y desactiva el otro.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/monitor_toggle3.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_monitor_switch.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)
 --------------------------------------------------------------------------------
-local PLUGINS = { "Sonarworks", "Sienna", "Extra" } -- subcadenas para localizar cada plugin
+local PLUGINS = { "Sonarworks", "Sienna" } -- subcadenas para localizar cada plugin
 local EXT_SECTION = "enemigo_monitor"
-local EXT_KEY = "toggle3_state"
+local EXT_KEY = "switch_state"
 
 --------------------------------------------------------------------------------
 -- Helpers sobre la cadena de monitorización (rec-FX) del máster
@@ -45,14 +45,6 @@ local function is_enabled(idx)
   return idx and (reaper.TrackFX_GetEnabled(track, RECFX + idx) == 1) or false
 end
 
-local function set_toolbar_state(state)
-  local _, _, _, cmd = reaper.get_action_context()
-  if cmd then
-    reaper.SetToggleCommandState(0, cmd, state and 1 or 0)
-    reaper.RefreshToolbar2(cmd, 0)
-  end
-end
-
 --------------------------------------------------------------------------------
 -- Resolución de plugins: ExtState -> config -> pregunta al usuario
 --------------------------------------------------------------------------------
@@ -63,7 +55,7 @@ local function resolve_plugin(i)
   if found then return found end
 
   local retval, input = reaper.GetUserInputs(
-    "Monitor toggle 3: plugin no encontrado",
+    "Monitor switch: plugin no encontrado",
     1,
     "Subcadena del nombre del plugin " .. i .. ":",
     name)
@@ -78,33 +70,36 @@ local function resolve_plugin(i)
 end
 
 --------------------------------------------------------------------------------
--- MAIN
+-- Estado de toolbar: highlight del botón asignado
 --------------------------------------------------------------------------------
-local idx = {}
-for i = 1, #PLUGINS do
-  idx[i] = resolve_plugin(i)
-end
-
-if not idx[1] then
-  reaper.ShowMessageBox(
-    string.format("No se encontró el plugin \"%s\" en la cadena de monitorización.", PLUGINS[1]),
-    "Monitor toggle 3", 0)
-  return
-end
-
-local current = 1
-for i = 1, #idx do
-  if idx[i] and is_enabled(idx[i]) then
-    current = i
-    break
+local function set_toolbar_state(state)
+  local _, _, _, cmd = reaper.get_action_context()
+  if cmd then
+    reaper.SetToggleCommandState(0, cmd, state and 1 or 0)
+    reaper.RefreshToolbar2(cmd, 0)
   end
 end
 
-local next = current % #PLUGINS + 1
-for i = 1, #idx do
-  if idx[i] then set_enabled(idx[i], i == next) end
+--------------------------------------------------------------------------------
+-- MAIN
+--------------------------------------------------------------------------------
+local idxA = resolve_plugin(1)
+local idxB = resolve_plugin(2)
+if not idxA then
+  reaper.ShowMessageBox(
+    string.format("No se encontró el plugin \"%s\" en la cadena de monitorización.", PLUGINS[1]),
+    "Monitor switch", 0)
+  return
 end
 
-local state = idx[next] and is_enabled(idx[next]) or false
+local aEnabled = is_enabled(idxA)
+if idxB then
+  set_enabled(idxA, not aEnabled)
+  set_enabled(idxB, aEnabled)
+else
+  set_enabled(idxA, not aEnabled)
+end
+
+local state = not aEnabled
 reaper.SetExtState(EXT_SECTION, EXT_KEY, state and "1" or "0", true)
 set_toolbar_state(state)

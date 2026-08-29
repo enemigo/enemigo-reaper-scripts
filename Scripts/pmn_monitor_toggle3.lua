@@ -1,4 +1,4 @@
--- @description pmn_Monitor: bypass Sonarworks y Sienna
+-- @description pmn_Monitor: alternar 3 plugins (Sonarworks / Sienna / Extra)
 -- @author Patricio Maripani Navarro
 -- @version 2.1
 -- @changelog
@@ -7,17 +7,17 @@
 --   + Eliminado reaper.defer() innecesario
 --   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
---   Alterna el bypass de los plugins Sonarworks y Sienna de la cadena de monitorización
---   del máster: si alguno está activo, los apaga todos; si están apagados, los enciende.
+--   Cicla entre tres plugins de monitorización del máster (Sonarworks, Sienna y Extra),
+--   activando uno y desactivando los demás.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/monitor_off.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_monitor_toggle3.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)
 --------------------------------------------------------------------------------
-local PLUGINS = { "Sonarworks", "Sienna" } -- subcadenas para localizar cada plugin
+local PLUGINS = { "Sonarworks", "Sienna", "Extra" } -- subcadenas para localizar cada plugin
 local EXT_SECTION = "enemigo_monitor"
-local EXT_KEY = "off_state"
+local EXT_KEY = "toggle3_state"
 
 --------------------------------------------------------------------------------
 -- Helpers sobre la cadena de monitorización (rec-FX) del máster
@@ -63,7 +63,7 @@ local function resolve_plugin(i)
   if found then return found end
 
   local retval, input = reaper.GetUserInputs(
-    "Monitor off: plugin no encontrado",
+    "Monitor toggle 3: plugin no encontrado",
     1,
     "Subcadena del nombre del plugin " .. i .. ":",
     name)
@@ -81,27 +81,30 @@ end
 -- MAIN
 --------------------------------------------------------------------------------
 local idx = {}
-local anyEnabled = false
-local found = 0
 for i = 1, #PLUGINS do
   idx[i] = resolve_plugin(i)
-  if idx[i] then
-    found = found + 1
-    if is_enabled(idx[i]) then anyEnabled = true end
-  end
 end
 
-if found == 0 then
+if not idx[1] then
   reaper.ShowMessageBox(
-    string.format("No se encontró ninguno de los plugins (%s) en la cadena de monitorización.", table.concat(PLUGINS, ", ")),
-    "Monitor off", 0)
+    string.format("No se encontró el plugin \"%s\" en la cadena de monitorización.", PLUGINS[1]),
+    "Monitor toggle 3", 0)
   return
 end
 
-local state = not anyEnabled
+local current = 1
 for i = 1, #idx do
-  set_enabled(idx[i], state)
+  if idx[i] and is_enabled(idx[i]) then
+    current = i
+    break
+  end
 end
 
+local next = current % #PLUGINS + 1
+for i = 1, #idx do
+  if idx[i] then set_enabled(idx[i], i == next) end
+end
+
+local state = idx[next] and is_enabled(idx[next]) or false
 reaper.SetExtState(EXT_SECTION, EXT_KEY, state and "1" or "0", true)
 set_toolbar_state(state)

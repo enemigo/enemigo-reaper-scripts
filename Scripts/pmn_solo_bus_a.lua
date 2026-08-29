@@ -3,7 +3,7 @@
 -- @version 2.1
 -- @changelog
 --   + Prefijo pmn_ en el nombre de acción
---   + Refactorizado a librería compartida (solo_bus_lib.lua)
+--   + Refactorizado a librería compartida (pmn_solo_bus_lib.lua)
 --   + Un script por bus (A/B/C/D/VOX): cada bus con su propia acción/atajo
 --   + Paquete ReaPack único: instala los 5 buses + la librería
 -- @about
@@ -12,15 +12,15 @@
 --   Este paquete instala las acciones de los buses A, B, C, D y VOX.
 -- @requires SWS/S&M Extension
 -- @provides
---   [nomain] solo_bus_lib.lua
---   [main] solo_bus_b.lua
---   [main] solo_bus_c.lua
---   [main] solo_bus_d.lua
---   [main] solo_bus_vox.lua
+--   [nomain] pmn_solo_bus_lib.lua
+--   [main] pmn_solo_bus_b.lua
+--   [main] pmn_solo_bus_c.lua
+--   [main] pmn_solo_bus_d.lua
+--   [main] pmn_solo_bus_vox.lua
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/solo_bus_a.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_solo_bus_a.lua
 
 local script_dir = debug.getinfo(1, "S").source:match("@?(.*)[/\\][^/\\]*$")
-local lib = dofile(script_dir .. "/solo_bus_lib.lua")
+local lib = dofile(script_dir .. "/pmn_solo_bus_lib.lua")
 
 reaper.defer(function() lib.run("A") end)

@@ -11,7 +11,7 @@
 --   apaga su ruteo (sends y master send) y deja que la pista FREEZE alimente los sends.
 --   El estado previo se guarda en ExtState para poder restaurarlo (MODE = "restore").
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/desarma_freeze.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_desarma_freeze.lua
 
 -- === OPTIONS ===
 local MODE = "exit"                     -- "exit" = arma el freeze, "restore" = restaura el estado original

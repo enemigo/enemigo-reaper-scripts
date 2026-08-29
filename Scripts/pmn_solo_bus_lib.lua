@@ -6,7 +6,7 @@
 --   Librería interna usada por solo_bus_A/B/C/D/VOX. Busca un bus por coincidencia difusa,
 --   lo crea si no existe, des-solo el resto y deja solo ese bus, trayéndolo a la vista.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/solo_bus_lib.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_solo_bus_lib.lua
 
 local solo_bus_lib = {}
 

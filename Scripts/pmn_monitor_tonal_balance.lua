@@ -1,22 +1,21 @@
--- @description pmn_Monitor: toggle bypass plugin DIM
+-- @description pmn_Monitor: mostrar/ocultar Tonal Balance Control
 -- @author Patricio Maripani Navarro
 -- @version 2.1
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
---   + Estado persistido en ExtState y refresh de toolbar
---   + Eliminado reaper.defer() innecesario
+--   + Mensaje de error si no se encuentra el plugin
 --   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
---   Alterna el bypass del plugin DIM (dim/atenuación) en la cadena de monitorización del máster.
+--   Muestra u oculta la ventana del plugin Tonal Balance Control en la cadena
+--   de monitorización del máster.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/monotor_dim.lua
+-- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_monitor_tonal_balance.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)
 --------------------------------------------------------------------------------
-local PLUGIN = "Dim"               -- subcadena para localizar el plugin
+local PLUGIN = "Tonal Balance"     -- subcadena para localizar el plugin
 local EXT_SECTION = "enemigo_monitor"
-local EXT_KEY = "dim_state"
 
 --------------------------------------------------------------------------------
 -- Helpers sobre la cadena de monitorización (rec-FX) del máster
@@ -36,32 +35,24 @@ local function find_recfx(substr)
   return nil
 end
 
-local function set_toolbar_state(state)
-  local _, _, _, cmd = reaper.get_action_context()
-  if cmd then
-    reaper.SetToggleCommandState(0, cmd, state and 1 or 0)
-    reaper.RefreshToolbar2(cmd, 0)
-  end
-end
-
 --------------------------------------------------------------------------------
 -- Resolución de plugins: ExtState -> config -> pregunta al usuario
 --------------------------------------------------------------------------------
 local function resolve_plugin()
-  local stored = reaper.GetExtState(EXT_SECTION, "plugin_1")
+  local stored = reaper.GetExtState(EXT_SECTION, "plugin_tonal")
   local name = (stored ~= "") and stored or PLUGIN
   local found = find_recfx(name)
   if found then return found end
 
   local retval, input = reaper.GetUserInputs(
-    "Monitor dim: plugin no encontrado",
+    "Monitor Tonal Balance: plugin no encontrado",
     1,
     "Subcadena del nombre del plugin:",
     name)
   if retval then
     input = input:gsub("^%s*(.-)%s*$", "%1")  -- recortar espacios
     if input ~= "" then
-      reaper.SetExtState(EXT_SECTION, "plugin_1", input, true)
+      reaper.SetExtState(EXT_SECTION, "plugin_tonal", input, true)
       return find_recfx(input)
     end
   end
@@ -75,12 +66,13 @@ local idx = resolve_plugin()
 if not idx then
   reaper.ShowMessageBox(
     string.format("No se encontró el plugin \"%s\" en la cadena de monitorización.", PLUGIN),
-    "Monitor dim", 0)
+    "Monitor Tonal Balance", 0)
   return
 end
 
-local state = reaper.TrackFX_GetEnabled(track, RECFX + idx) == 0
-reaper.TrackFX_SetEnabled(track, RECFX + idx, state)
-
-reaper.SetExtState(EXT_SECTION, EXT_KEY, state and "1" or "0", true)
-set_toolbar_state(state)
+local fxIdx = RECFX + idx
+if reaper.TrackFX_GetOpen(track, fxIdx) == false then
+  reaper.TrackFX_Show(track, fxIdx, 1)
+else
+  reaper.TrackFX_Show(track, fxIdx, 0)
+end
