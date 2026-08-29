@@ -67,7 +67,7 @@ Cada idea puede marcarse como `[ ]` pendiente o `[x]` hecha.
 
 - [x] Crear A/B switch por pista (compara_fx): guarda estado de FX y los invierte; restaura al volver a ejecutar.
 - [x] Ignorar FX offline en ambos scripts.
-- [x] Crear toggle_fx: usa el FX enfocado (GetFocusedFX) para hallar la pista y togglea todos sus FX.
+- [x] Crear toggle_fx: toggle del FX enfocado (GetFocusedFX), sin mensajes, ignorando offline.
 
 ## General / infraestructura
 - [x] Headers `@changelog`, `@about`, `@provides` consistentes para ReaPack.

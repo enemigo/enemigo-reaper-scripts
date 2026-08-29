@@ -1,23 +1,20 @@
--- @description pmn_Toggle FX: toggle bypass de todos los FX de la pista enfocada
+-- @description pmn_Toggle FX: toggle bypass del FX enfocado
 -- @author Patricio Maripani Navarro
--- @version 1.0
+-- @version 2.0
 -- @changelog
---   + Primer disparo: usa el FX enfocado (GetFocusedFX) para hallar la pista y hace toggle de bypass de todos sus FX
---   + Ignora los FX offline
+--   + Toggle del FX enfocado (GetFocusedFX), como el original
+--   + Sin mensajes al terminar
+--   + Validación de punteros y track local
 -- @about
---   Cuando tienes abierta la ventana de un FX, este script hace toggle de bypass de TODOS
---   los FX de esa pista (los activos se apagan, los inactivos se encienden).
---   Los FX marcados como offline se ignoran (no se tocan).
+--   Cuando tienes un FX enfocado en la cadena de la pista, alterna su bypass
+--   (activo<->inactivo). Ignora FX offline.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
 -- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_toggle_fx.lua
 
-local function get_focused_track()
+local function get_focused_fx()
   local retval, track_number, item_number, fx_number = reaper.GetFocusedFX()
-  if retval ~= 1 then
-    return nil, "No hay ningún FX enfocado.\nAbre la ventana de un FX de la pista."
-  end
-  if item_number ~= -1 then
-    return nil, "El FX enfocado es de un ítem, no de una pista."
+  if retval ~= 1 or item_number ~= -1 then
+    return nil, nil
   end
 
   local track
@@ -28,42 +25,25 @@ local function get_focused_track()
   end
 
   if not track or not reaper.ValidatePtr(track, "MediaTrack*") then
-    return nil, "No se pudo obtener la pista del FX enfocado."
+    return nil, nil
   end
-  return track
+
+  return track, fx_number
 end
 
 local function main()
-  local track, err = get_focused_track()
-  if not track then
-    reaper.ShowMessageBox(err, "Toggle FX", 0)
+  local track, fx_number = get_focused_fx()
+  if not track or not fx_number then
     return
   end
 
-  local n = reaper.TrackFX_GetCount(track)
-  if n == 0 then
-    reaper.ShowMessageBox("La pista no tiene FX.", "Toggle FX", 0)
+  if reaper.TrackFX_GetOffline(track, fx_number) then
     return
   end
 
-  local toggled = 0
-  local skipped = 0
-  for i = 0, n - 1 do
-    if reaper.TrackFX_GetOffline(track, i) then
-      skipped = skipped + 1
-    else
-      reaper.TrackFX_SetEnabled(track, i, not reaper.TrackFX_GetEnabled(track, i))
-      toggled = toggled + 1
-    end
-  end
-
-  local msg = string.format("Toggle aplicado a %d FX.", toggled)
-  if skipped > 0 then
-    msg = msg .. string.format("\n%d FX offline ignorados.", skipped)
-  end
-  reaper.ShowMessageBox(msg, "Toggle FX", 0)
+  reaper.TrackFX_SetEnabled(track, fx_number, not reaper.TrackFX_GetEnabled(track, fx_number))
 end
 
 reaper.Undo_BeginBlock()
 main()
-reaper.Undo_EndBlock("Toggle FX de pista enfocada", -1)
+reaper.Undo_EndBlock("Toggle FX enfocado", -1)
