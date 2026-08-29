@@ -1,10 +1,11 @@
 -- @description pmn_Monitor: alternar SoundID / Sienna
 -- @author Patricio Maripani Navarro
--- @version 2.4
+-- @version 2.5
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
 --   + Fallback por posición si no encuentra por nombre (fix: se activaba antes)
 --   + Toggle robusto: si falta un plugin, alterna el que existe; error si faltan ambos
+--   + Log de debug (lista cadena y muestra cómo resuelve cada plugin)
 --   + Nombres por defecto: SoundID / Sienna
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
@@ -59,17 +60,48 @@ local function is_enabled(idx)
 end
 
 --------------------------------------------------------------------------------
+-- LOG (debug)
+--------------------------------------------------------------------------------
+local DEBUG = true
+
+local function log(msg)
+  if DEBUG then
+    reaper.ShowConsoleMsg("[monitor_switch] " .. msg .. "\n")
+  end
+end
+
+local function log_rec_chain()
+  local cnt = reaper.TrackFX_GetRecCount(track)
+  log("Cadena de monitorización (" .. cnt .. " plugins):")
+  for i = 0, cnt - 1 do
+    local ok, name = reaper.TrackFX_GetFXName(track, RECFX + i, "")
+    local en = reaper.TrackFX_GetEnabled(track, RECFX + i)
+    log(string.format("  [%d] (0-based %d) %s  enabled=%d", i + 1, i, ok and name or "?", en))
+  end
+end
+
+--------------------------------------------------------------------------------
 -- Resolución de plugins: ExtState -> config (nombre) -> posición -> pregunta
 --------------------------------------------------------------------------------
 local function resolve_plugin(i)
   local stored = reaper.GetExtState(EXT_SECTION, "plugin_" .. i)
   local name = (stored ~= "") and stored or PLUGINS[i]
   local found = find_recfx(name)
-  if found then return found end
+  if found then
+    log(string.format("Plugin %d: encontrado por NOMBRE \"%s\" -> index %d", i, name, found))
+    return found
+  end
+  log(string.format("Plugin %d: NO encontrado por nombre \"%s\"", i, name))
 
   if stored == "" then
     local bypos = recfx_by_pos(POSITIONS[i])
-    if bypos then return bypos end
+    if bypos then
+      log(string.format("Plugin %d: fallback por POSICIÓN %d -> index %d", i, POSITIONS[i], bypos))
+      return bypos
+    end
+    log(string.format("Plugin %d: posición %d fuera de rango", i, POSITIONS[i]))
+  else
+    log(string.format("Plugin %d: tiene nombre guardado en ExtState (%s), no uso posición", i, stored))
   end
 
   local retval, input = reaper.GetUserInputs(
@@ -101,6 +133,7 @@ end
 --------------------------------------------------------------------------------
 -- MAIN
 --------------------------------------------------------------------------------
+log_rec_chain()
 local idxA = resolve_plugin(1)
 local idxB = resolve_plugin(2)
 
@@ -117,6 +150,7 @@ if idxA and idxB then
   -- Toggle limpio entre ambos: activa A si estaba apagado (o viceversa),
   -- dejando siempre exactamente uno activo.
   local aEnabled = is_enabled(idxA)
+  log(string.format("Toggle: A enabled=%s -> enciendo A=%s, B=%s", tostring(aEnabled), tostring(not aEnabled), tostring(aEnabled)))
   set_enabled(idxA, not aEnabled)
   set_enabled(idxB, aEnabled)
   state = not aEnabled
@@ -124,6 +158,7 @@ else
   -- Solo uno disponible: toggle on/off del que existe
   local only = idxA or idxB
   local on = is_enabled(only)
+  log(string.format("Un solo plugin (index %d): enabled=%s -> new=%s", only, tostring(on), tostring(not on)))
   set_enabled(only, not on)
   state = not on
 end
