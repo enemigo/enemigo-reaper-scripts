@@ -1,7 +1,8 @@
 -- @description pmn_Compara FX: A/B switch de la cadena FX de la pista seleccionada
 -- @author Patricio Maripani Navarro
--- @version 1.1
+-- @version 1.2
 -- @changelog
+--   + Eliminados los mensajes de éxito (silencioso)
 --   + Ignora los FX offline (no los toca ni los guarda)
 --   + Primer disparo: guarda el estado de los FX de la pista seleccionada e invierte activos<->inactivos
 --   + Segundo disparo: restaura el estado original
@@ -72,19 +73,15 @@ local function main()
     -- Restaurar estado original
     apply_snapshot(track, saved)
     reaper.SetExtState(EXT_SECTION, key, "", true)
-    reaper.ShowMessageBox("Estado original restaurado.", "Compara FX", 0)
   else
     -- Guardar estado actual e invertir (omitiendo offline)
     local snap = snapshot_track(track)
     reaper.SetExtState(EXT_SECTION, key, snap, true)
-    local toggled = 0
     for i = 0, n - 1 do
       if not reaper.TrackFX_GetOffline(track, i) then
         reaper.TrackFX_SetEnabled(track, i, not reaper.TrackFX_GetEnabled(track, i))
-        toggled = toggled + 1
       end
     end
-    reaper.ShowMessageBox(string.format("FX invertidos (%d). Vuelve a ejecutar para restaurar.", toggled), "Compara FX", 0)
   end
 end
 
