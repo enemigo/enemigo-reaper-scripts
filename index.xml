@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="00ec3f1234b795e8f03da249fe12697fe0afec9a">
+<index version="1" name="enemigo-reaper-scripts" commit="4b85301970e863313757044a8615a4322a410988">
   <category name="Scripts">
+    <reapack name="pmn_compara_fx.lua" type="script" desc="pmn_Compara FX: A/B switch de la cadena FX de la pista seleccionada">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 A/B switch de la cadena FX de la pista seleccionada. Al disparar por primera vez guarda qu\u233 ? FX estaban activos y los invierte (los activos se apagan y viceversa). Al disparar de nuevo, restaura el estado original. \u218 ?til para comparar procesado con/sin FX.\par}
+}
+]]></description>
+        <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
+      </metadata>
+      <version name="1.0" author="Patricio Maripani Navarro" time="2026-08-29T18:47:31Z">
+        <changelog><![CDATA[+ Primer disparo: guarda el estado de los FX de la pista seleccionada e invierte activos<->inactivos
++ Segundo disparo: restaura el estado original
++ Soporta master track (selección de pista 0)]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/4b85301970e863313757044a8615a4322a410988/Scripts/pmn_compara_fx.lua</source>
+      </version>
+    </reapack>
     <reapack name="pmn_desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
