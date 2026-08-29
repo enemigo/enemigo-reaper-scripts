@@ -1,17 +1,17 @@
 -- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (toggle + tap tempo)
 -- @author Patricio Maripani Navarro
--- @version 3.1
+-- @version 3.2
 -- @changelog
 --   + Prefijo pmn_ en el nombre de acción
 --   + Ventana gfx nativa (sin dependencias) con toggle: disparar abre/cierra
---   + Botón TAP tempo: haz clic al ritmo y aplica el BPM al proyecto
+--   + Botón TAP tempo: calcula el BPM al hacer clic (solo muestra, no modifica el proyecto)
 --   + Valores redondeados a 2 decimales
 --   + División 1/64 añadida
 --   + Swing incluido
 -- @about
 --   Calculadora de duraciones en milisegundos para las divisiones rítmicas
 --   (directas, tercillos, puntillos y swing) al BPM actual. Incluye un botón
---   TAP tempo que calcula el BPM al hacer clic y lo aplica al proyecto.
+--   TAP tempo que calcula el BPM al hacer clic (solo visual, no modifica el proyecto).
 --   Ventana persistente: vuelve a ejecutar la acción para cerrarla.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
 -- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_sincroniza_tempo.lua
@@ -135,7 +135,6 @@ local function loop()
           end
           current_bpm = round2(60 / avg)
           last_interval = dt
-          reaper.Master_SetTempo(current_bpm)
           lines = build_lines(current_bpm)
           tap_status = string.format("TAP: %.2f BPM", current_bpm)
         end

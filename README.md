@@ -54,7 +54,7 @@ Alternan plugins de la cadena de monitorización del máster, actualizando el hi
 
 ### Utilidades
 
-- **`pmn_sincroniza_tempo.lua`** — Calculadora con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. Ventana persistente (gfx nativa) con **botón TAP tempo** que calcula y aplica el BPM al proyecto. Dispara la acción para abrirla y de nuevo para cerrarla. Sin dependencias.
+- **`pmn_sincroniza_tempo.lua`** — Calculadora con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. Ventana persistente (gfx nativa) con **botón TAP tempo** que calcula el BPM al hacer clic (solo visual, no modifica el proyecto). Dispara la acción para abrirla y de nuevo para cerrarla. Sin dependencias.
 
 ---
 
