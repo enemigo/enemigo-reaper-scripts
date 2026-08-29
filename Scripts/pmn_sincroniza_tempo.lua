@@ -1,7 +1,8 @@
 -- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (toggle + tap tempo)
 -- @author Patricio Maripani Navarro
--- @version 3.5
+-- @version 3.6
 -- @changelog
+--   + Fix: usar gfx.set (valores 0-1) en vez de gfx.setcolor
 --   + Fallback con pcall: si la ventana gfx falla, muestra la tabla clásica (ShowMessageBox)
 --   + Corregido "Tercillo" -> "Tresillo"
 --   + Fix: usar reaper.defer (no gfx.defer) para el loop
@@ -145,7 +146,7 @@ local function run_gfx()
       end
     end
 
-    gfx.setcolor(230, 230, 230, 255)
+    gfx.set(0.9, 0.9, 0.9, 1)
     local y = MARGIN
     for _, ln in ipairs(lines) do
       gfx.x = MARGIN
@@ -154,9 +155,9 @@ local function run_gfx()
       y = y + LINE_H
     end
 
-    gfx.setcolor(70, 110, 170, 255)
+    gfx.set(0.27, 0.43, 0.67, 1)
     gfx.rect(btn_x, btn_y, btn_w, BTN_H, 1)
-    gfx.setcolor(210, 220, 240, 255)
+    gfx.set(0.82, 0.86, 0.94, 1)
     gfx.rect(btn_x, btn_y, btn_w, BTN_H, 0)
     gfx.x = btn_x + MARGIN
     gfx.y = btn_y + 12
