@@ -53,7 +53,7 @@ local function resolve_plugin()
   local found = find_recfx(name)
   if found then return found end
 
-  if not stored then
+  if stored == "" then
     local bypos = recfx_by_pos(POS_AB)
     if bypos then return bypos end
   end

@@ -1,14 +1,15 @@
--- @description pmn_Monitor: alternar Sonarworks / Sienna
+-- @description pmn_Monitor: alternar SoundID / Sienna
 -- @author Patricio Maripani Navarro
--- @version 2.2
+-- @version 2.3
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
---   + Fallback por posición si no encuentra por nombre
+--   + Fallback por posición si no encuentra por nombre (fix: se activaba antes)
+--   + Nombres por defecto: SoundID / Sienna
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
 --   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
---   Alterna entre los plugins de monitorización A y B (Sonarworks / Sienna) en la cadena
+--   Alterna entre los plugins de monitorización A y B (SoundID / Sienna) en la cadena
 --   de monitorización del máster: activa uno y desactiva el otro.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
 -- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_monitor_switch.lua
@@ -16,7 +17,7 @@
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)
 --------------------------------------------------------------------------------
-local PLUGINS = { "Sonarworks", "Sienna" } -- subcadenas para localizar cada plugin
+local PLUGINS = { "SoundID", "Sienna" } -- subcadenas para localizar cada plugin
 local POSITIONS = { 4, 5 }          -- fallback: posiciones 1-based de cada plugin
 local EXT_SECTION = "enemigo_monitor"
 local EXT_KEY = "switch_state"
@@ -65,7 +66,7 @@ local function resolve_plugin(i)
   local found = find_recfx(name)
   if found then return found end
 
-  if not stored then
+  if stored == "" then
     local bypos = recfx_by_pos(POSITIONS[i])
     if bypos then return bypos end
   end
