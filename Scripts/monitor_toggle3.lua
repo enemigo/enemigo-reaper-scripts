@@ -1,10 +1,11 @@
 -- @description pmn_Monitor: alternar 3 plugins (Sonarworks / Sienna / Extra)
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
+--   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
 --   Cicla entre tres plugins de monitorización del máster (Sonarworks, Sienna y Extra),
 --   activando uno y desactivando los demás.
@@ -53,11 +54,35 @@ local function set_toolbar_state(state)
 end
 
 --------------------------------------------------------------------------------
+-- Resolución de plugins: ExtState -> config -> pregunta al usuario
+--------------------------------------------------------------------------------
+local function resolve_plugin(i)
+  local stored = reaper.GetExtState(EXT_SECTION, "plugin_" .. i)
+  local name = (stored ~= "") and stored or PLUGINS[i]
+  local found = find_recfx(name)
+  if found then return found end
+
+  local retval, input = reaper.GetUserInputs(
+    "Monitor toggle 3: plugin no encontrado",
+    1,
+    "Subcadena del nombre del plugin " .. i .. ":",
+    name)
+  if retval then
+    input = input:gsub("^%s*(.-)%s*$", "%1")  -- recortar espacios
+    if input ~= "" then
+      reaper.SetExtState(EXT_SECTION, "plugin_" .. i, input, true)
+      return find_recfx(input)
+    end
+  end
+  return nil
+end
+
+--------------------------------------------------------------------------------
 -- MAIN
 --------------------------------------------------------------------------------
 local idx = {}
 for i = 1, #PLUGINS do
-  idx[i] = find_recfx(PLUGINS[i])
+  idx[i] = resolve_plugin(i)
 end
 
 if not idx[1] then

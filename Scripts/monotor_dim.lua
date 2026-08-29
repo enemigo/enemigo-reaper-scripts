@@ -1,10 +1,11 @@
 -- @description pmn_Monitor: toggle bypass plugin DIM
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
+--   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
 --   Alterna el bypass del plugin DIM (dim/atenuación) en la cadena de monitorización del máster.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
@@ -44,9 +45,33 @@ local function set_toolbar_state(state)
 end
 
 --------------------------------------------------------------------------------
+-- Resolución de plugins: ExtState -> config -> pregunta al usuario
+--------------------------------------------------------------------------------
+local function resolve_plugin()
+  local stored = reaper.GetExtState(EXT_SECTION, "plugin_1")
+  local name = (stored ~= "") and stored or PLUGIN
+  local found = find_recfx(name)
+  if found then return found end
+
+  local retval, input = reaper.GetUserInputs(
+    "Monitor dim: plugin no encontrado",
+    1,
+    "Subcadena del nombre del plugin:",
+    name)
+  if retval then
+    input = input:gsub("^%s*(.-)%s*$", "%1")  -- recortar espacios
+    if input ~= "" then
+      reaper.SetExtState(EXT_SECTION, "plugin_1", input, true)
+      return find_recfx(input)
+    end
+  end
+  return nil
+end
+
+--------------------------------------------------------------------------------
 -- MAIN
 --------------------------------------------------------------------------------
-local idx = find_recfx(PLUGIN)
+local idx = resolve_plugin()
 if not idx then
   reaper.ShowMessageBox(
     string.format("No se encontró el plugin \"%s\" en la cadena de monitorización.", PLUGIN),

@@ -1,9 +1,10 @@
 -- @description pmn_Monitor: mostrar/ocultar Tonal Balance Control
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
 --   + Mensaje de error si no se encuentra el plugin
+--   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
 --   Muestra u oculta la ventana del plugin Tonal Balance Control en la cadena
 --   de monitorización del máster.
@@ -14,6 +15,7 @@
 -- CONFIG (personalizá libremente)
 --------------------------------------------------------------------------------
 local PLUGIN = "Tonal Balance"     -- subcadena para localizar el plugin
+local EXT_SECTION = "enemigo_monitor"
 
 --------------------------------------------------------------------------------
 -- Helpers sobre la cadena de monitorización (rec-FX) del máster
@@ -34,9 +36,33 @@ local function find_recfx(substr)
 end
 
 --------------------------------------------------------------------------------
+-- Resolución de plugins: ExtState -> config -> pregunta al usuario
+--------------------------------------------------------------------------------
+local function resolve_plugin()
+  local stored = reaper.GetExtState(EXT_SECTION, "plugin_tonal")
+  local name = (stored ~= "") and stored or PLUGIN
+  local found = find_recfx(name)
+  if found then return found end
+
+  local retval, input = reaper.GetUserInputs(
+    "Monitor Tonal Balance: plugin no encontrado",
+    1,
+    "Subcadena del nombre del plugin:",
+    name)
+  if retval then
+    input = input:gsub("^%s*(.-)%s*$", "%1")  -- recortar espacios
+    if input ~= "" then
+      reaper.SetExtState(EXT_SECTION, "plugin_tonal", input, true)
+      return find_recfx(input)
+    end
+  end
+  return nil
+end
+
+--------------------------------------------------------------------------------
 -- MAIN
 --------------------------------------------------------------------------------
-local idx = find_recfx(PLUGIN)
+local idx = resolve_plugin()
 if not idx then
   reaper.ShowMessageBox(
     string.format("No se encontró el plugin \"%s\" en la cadena de monitorización.", PLUGIN),

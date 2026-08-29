@@ -1,10 +1,11 @@
 -- @description pmn_Monitor: alternar Sonarworks / Sienna
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
+--   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
 --   Alterna entre los plugins de monitorización A y B (Sonarworks / Sienna) en la cadena
 --   de monitorización del máster: activa uno y desactiva el otro.
@@ -45,6 +46,30 @@ local function is_enabled(idx)
 end
 
 --------------------------------------------------------------------------------
+-- Resolución de plugins: ExtState -> config -> pregunta al usuario
+--------------------------------------------------------------------------------
+local function resolve_plugin(i)
+  local stored = reaper.GetExtState(EXT_SECTION, "plugin_" .. i)
+  local name = (stored ~= "") and stored or PLUGINS[i]
+  local found = find_recfx(name)
+  if found then return found end
+
+  local retval, input = reaper.GetUserInputs(
+    "Monitor switch: plugin no encontrado",
+    1,
+    "Subcadena del nombre del plugin " .. i .. ":",
+    name)
+  if retval then
+    input = input:gsub("^%s*(.-)%s*$", "%1")  -- recortar espacios
+    if input ~= "" then
+      reaper.SetExtState(EXT_SECTION, "plugin_" .. i, input, true)
+      return find_recfx(input)
+    end
+  end
+  return nil
+end
+
+--------------------------------------------------------------------------------
 -- Estado de toolbar: highlight del botón asignado
 --------------------------------------------------------------------------------
 local function set_toolbar_state(state)
@@ -58,7 +83,8 @@ end
 --------------------------------------------------------------------------------
 -- MAIN
 --------------------------------------------------------------------------------
-local idxA, idxB = find_recfx(PLUGINS[1]), find_recfx(PLUGINS[2])
+local idxA = resolve_plugin(1)
+local idxB = resolve_plugin(2)
 if not idxA then
   reaper.ShowMessageBox(
     string.format("No se encontró el plugin \"%s\" en la cadena de monitorización.", PLUGINS[1]),

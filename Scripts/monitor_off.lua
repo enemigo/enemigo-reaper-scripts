@@ -1,10 +1,11 @@
 -- @description pmn_Monitor: bypass Sonarworks y Sienna
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
+--   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
 --   Alterna el bypass de los plugins Sonarworks y Sienna de la cadena de monitorización
 --   del máster: si alguno está activo, los apaga todos; si están apagados, los enciende.
@@ -53,13 +54,37 @@ local function set_toolbar_state(state)
 end
 
 --------------------------------------------------------------------------------
+-- Resolución de plugins: ExtState -> config -> pregunta al usuario
+--------------------------------------------------------------------------------
+local function resolve_plugin(i)
+  local stored = reaper.GetExtState(EXT_SECTION, "plugin_" .. i)
+  local name = (stored ~= "") and stored or PLUGINS[i]
+  local found = find_recfx(name)
+  if found then return found end
+
+  local retval, input = reaper.GetUserInputs(
+    "Monitor off: plugin no encontrado",
+    1,
+    "Subcadena del nombre del plugin " .. i .. ":",
+    name)
+  if retval then
+    input = input:gsub("^%s*(.-)%s*$", "%1")  -- recortar espacios
+    if input ~= "" then
+      reaper.SetExtState(EXT_SECTION, "plugin_" .. i, input, true)
+      return find_recfx(input)
+    end
+  end
+  return nil
+end
+
+--------------------------------------------------------------------------------
 -- MAIN
 --------------------------------------------------------------------------------
 local idx = {}
 local anyEnabled = false
 local found = 0
 for i = 1, #PLUGINS do
-  idx[i] = find_recfx(PLUGINS[i])
+  idx[i] = resolve_plugin(i)
   if idx[i] then
     found = found + 1
     if is_enabled(idx[i]) then anyEnabled = true end
