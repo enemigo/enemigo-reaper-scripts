@@ -1,6 +1,6 @@
 -- @description pmn_Monitor: alternar SoundID / Sienna
 -- @author Patricio Maripani Navarro
--- @version 2.6
+-- @version 2.7
 -- @changelog
 --   + Fix: TrackFX_GetEnabled puede devolver booleano (is_enabled y log)
 --   + Detección de plugins por nombre (ya no depende de posición fija)
