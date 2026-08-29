@@ -56,12 +56,10 @@ Cada idea puede marcarse como `[ ]` pendiente o `[x]` hecha.
 - [x] Localizar la variable `tempo`.
 - [x] Opción de copiar al portapapeles (`CF_Text`) un valor elegido.
 - [x] **Soporte de tempo maps**: si el proyecto tiene varios BPM (`GetTempoTimeSigMarker`), listar las duraciones por sección.
-- [x] **Mejorar la visualización (ReaImGui)**: reemplazar el `ShowMessageBox` (muy "alert") por una ventana interactiva con:
+- [x] **Mejorar la visualización**: se descartó ReaImGui (más problemas que beneficios). Se mantuvo `ShowMessageBox` con mejor formato.
   - Tablas por grupo (directo / tercillo / puntillo / swing) para consulta rápida.
-  - BPM editable en vivo que recalcula al instante.
-  - Botón para copiar un valor al portapapeles.
-  - Ajuste opcional de swing (%).
-  - Requiere ReaImGui (librería ReaPack).
+  - Copiar valor al portapapeles.
+  - Ajuste de swing (%).
 
 ## General / infraestructura
 

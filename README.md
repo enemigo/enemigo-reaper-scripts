@@ -56,7 +56,7 @@ Alternan plugins de la cadena de monitorización del máster, actualizando el hi
 
 ### Utilidades
 
-- **`pmn_sincroniza_tempo.lua`** — Ventana interactiva (**ReaImGui**) con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. BPM editable en vivo, soporte de **tempo maps** (varias secciones) y botón para **copiar al portapapeles**. Requiere [ReaImGui](https://github.com/cfillion/reaimgui) (ReaPack: ReaTeam Extensions).
+- **`pmn_sincroniza_tempo.lua`** — Calculadora con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. Soporta **tempo maps** (varias secciones). Solo usa la API nativa de REAPER.
 
 ---
 
