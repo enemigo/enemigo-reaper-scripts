@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="2d4b26fbea37e5c4afe442ae60ea2a004306c11c">
+<index version="1" name="enemigo-reaper-scripts" commit="b6e998fd44ab4f2fe593429ec1dc54db02b614b1">
   <category name="Scripts">
     <reapack name="pmn_compara_fx.lua" type="script" desc="pmn_Compara FX: A/B switch de la cadena FX de la pista seleccionada">
       <metadata>
@@ -409,13 +409,13 @@
         <source main="main" file="pmn_solo_bus_vox.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_vox.lua</source>
       </version>
     </reapack>
-    <reapack name="pmn_toggle_fx.lua" type="script" desc="pmn_Toggle FX: toggle bypass de todos los FX de la pista enfocada">
+    <reapack name="pmn_toggle_fx.lua" type="script" desc="pmn_Toggle FX: toggle bypass del FX enfocado">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Cuando tienes abierta la ventana de un FX, este script hace toggle de bypass de TODOS los FX de esa pista (los activos se apagan, los inactivos se encienden). Los FX marcados como offline se ignoran (no se tocan).\par}
+{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Cuando tienes un FX enfocado en la cadena de la pista, alterna su bypass (activo<->inactivo). Ignora FX offline.\par}
 }
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
@@ -424,6 +424,12 @@
         <changelog><![CDATA[+ Primer disparo: usa el FX enfocado (GetFocusedFX) para hallar la pista y hace toggle de bypass de todos sus FX
 + Ignora los FX offline]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/23a42a3f6330eadb67ae3b18a00b0a5dab867967/Scripts/pmn_toggle_fx.lua</source>
+      </version>
+      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-29T19:22:00Z">
+        <changelog><![CDATA[+ Toggle del FX enfocado (GetFocusedFX), como el original
++ Sin mensajes al terminar
++ Validación de punteros y track local]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/b6e998fd44ab4f2fe593429ec1dc54db02b614b1/Scripts/pmn_toggle_fx.lua</source>
       </version>
     </reapack>
   </category>
