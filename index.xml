@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="1d2056ed6668aae9849cf3bcd2410316ad04f746">
+<index version="1" name="enemigo-reaper-scripts" commit="7308dde417d4775deb314bdcff94d6430cf61e3d">
   <category name="Scripts">
     <reapack name="pmn_desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
       <metadata>
@@ -171,13 +171,13 @@
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_setea_B.lua</source>
       </version>
     </reapack>
-    <reapack name="pmn_sincroniza_tempo.lua" type="script" desc="pmn_Sincroniza tempo: calculadora de ms por división rítmica (ReaImGui)">
+    <reapack name="pmn_sincroniza_tempo.lua" type="script" desc="pmn_Sincroniza tempo: calculadora de ms por división rítmica">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Calculadora de duraciones en milisegundos para las divisiones r\u237 ?tmicas (directas, tercillos, puntillos y swing) al BPM actual (o por secci\u243 ?n si el proyecto tiene tempo map). Permite copiar cada valor al portapapeles.\par}
+{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Calculadora de duraciones en milisegundos para las divisiones r\u237 ?tmicas (directas, tercillos, puntillos y swing) al BPM actual (o por secci\u243 ?n si el proyecto tiene tempo map). Usa ReaImGui si est\u225 ? instalado; si no, muestra una caja de texto cl\u225 ?sica.\par}
 }
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
@@ -191,6 +191,17 @@
 + Copiar valor al portapapeles con un clic
 + Swing ajustable (%)]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_sincroniza_tempo.lua</source>
+      </version>
+      <version name="2.2" author="Patricio Maripani Navarro" time="2026-08-29T00:56:35Z">
+        <changelog><![CDATA[+ Prefijo pmn_ en el nombre de acción
++ Ventana interactiva (ReaImGui) si está instalada
++ Interfaz clásica (ShowMessageBox) como fallback si no hay ReaImGui
++ BPM editable en vivo, valores redondeados a 2 decimales
++ División 1/64 añadida
++ Soporte de tempo maps (varios BPM por sección)
++ Copiar valor al portapapeles con un clic
++ Swing ajustable (%)]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/7308dde417d4775deb314bdcff94d6430cf61e3d/Scripts/pmn_sincroniza_tempo.lua</source>
       </version>
     </reapack>
     <reapack name="pmn_solo_bus_a.lua" type="script" desc="pmn_Solo bus (A/B/C/D/VOX): toggle select + solo con creación">
