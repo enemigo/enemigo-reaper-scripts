@@ -59,13 +59,15 @@ Cada idea puede marcarse como `[ ]` pendiente o `[x]` hecha.
 - [x] Localizar la variable `tempo`.
 - [x] Opción de copiar al portapapeles (`CF_Text`) un valor elegido.
 - [x] **Soporte de tempo maps**: si el proyecto tiene varios BPM (`GetTempoTimeSigMarker`), listar las duraciones por sección.
-- [x] **Mejorar la visualización**: se descartó ReaImGui (más problemas que beneficios). Se mantuvo `ShowMessageBox` con mejor formato.
-  - Tablas por grupo (directo / tercillo / puntillo / swing) para consulta rápida.
-  - Copiar valor al portapapeles.
-  - Ajuste de swing (%).
+- [x] **Mejorar la visualización**: se descartó ReaImGui (más problemas que beneficios). Ventana gfx nativa con toggle + TAP tempo.
+  - Tablas por grupo (directo / tresillo / puntillo / swing) para consulta rápida.
+  - Botón TAP que muestra el BPM (no modifica el proyecto).
+
+## compara_fx.lua (nuevo)
+
+- [x] Crear A/B switch por pista: guarda estado de FX y los invierte; restaura al volver a ejecutar.
 
 ## General / infraestructura
-
 - [x] Headers `@changelog`, `@about`, `@provides` consistentes para ReaPack.
 - [x] Generar `index.xml` con `reapack-index` (requiere Ruby + gem + pandoc).
 - [x] Mover scripts a `Scripts/` (categoría ReaPack; los archivos en la raíz no se indexan).
