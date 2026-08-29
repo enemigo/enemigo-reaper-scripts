@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="7a11541f57e6386d16a14f8498c12f24cceed8ce">
+<index version="1" name="enemigo-reaper-scripts" commit="00ec3f1234b795e8f03da249fe12697fe0afec9a">
   <category name="Scripts">
     <reapack name="pmn_desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
       <metadata>
@@ -337,6 +337,19 @@
 + Ventana gfx nativa con toggle y botón TAP tempo (solo muestra BPM)
 + Valores redondeados a 2 decimales, división 1/64, swing]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/7a11541f57e6386d16a14f8498c12f24cceed8ce/Scripts/pmn_sincroniza_tempo.lua</source>
+      </version>
+      <version name="3.8" author="Patricio Maripani Navarro" time="2026-08-29T17:55:37Z">
+        <changelog><![CDATA[+ Fix: si el flag quedó "abierta" de una sesión previa, cierra y reabre (siempre abre al disparar)
++ Fuente más grande (15) y ventana más amplia
++ Ya no cierra con el 2do disparo: si está abierta no crea otra instancia; solo se cierra con la X
++ Fix: usar gfx.set (valores 0-1) en vez de gfx.setcolor
++ Fallback con pcall: si la ventana gfx falla, muestra la tabla clásica (ShowMessageBox)
++ Corregido "Tercillo" -> "Tresillo"
++ Fix: usar reaper.defer (no gfx.defer) para el loop
++ Fix: usar la API gfx global (no reaper.gfx)
++ Ventana gfx nativa con toggle y botón TAP tempo (solo muestra BPM)
++ Valores redondeados a 2 decimales, división 1/64, swing]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/00ec3f1234b795e8f03da249fe12697fe0afec9a/Scripts/pmn_sincroniza_tempo.lua</source>
       </version>
     </reapack>
     <reapack name="pmn_solo_bus_a.lua" type="script" desc="pmn_Solo bus (A/B/C/D/VOX): toggle select + solo con creación">
