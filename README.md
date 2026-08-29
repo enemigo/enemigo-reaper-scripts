@@ -54,7 +54,7 @@ Alternan plugins de la cadena de monitorización del máster, actualizando el hi
 
 ### Utilidades
 
-- **`pmn_sincroniza_tempo.lua`** — Calculadora con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. Soporta **tempo maps** (varias secciones). Solo usa la API nativa de REAPER.
+- **`pmn_sincroniza_tempo.lua`** — Calculadora con las **duraciones en milisegundos** de las divisiones rítmicas (1/1 a 1/64, directas, tercillos, puntillos y swing) al BPM del proyecto. Soporta **tempo maps** (varias secciones). Ventana persistente (gfx nativa): dispara la acción para abrirla y de nuevo para cerrarla. Sin dependencias.
 
 ---
 

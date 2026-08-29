@@ -1,20 +1,24 @@
--- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica
+-- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (toggle)
 -- @author Patricio Maripani Navarro
--- @version 2.3
+-- @version 3.0
 -- @changelog
 --   + Prefijo pmn_ en el nombre de acción
---   + Se quita la dependencia de ReaImGui (interfaz clásica)
+--   + Ventana gfx nativa (sin dependencias) con toggle: disparar abre/cierra
 --   + Valores redondeados a 2 decimales
 --   + División 1/64 añadida
 --   + Soporte de tempo maps (varios BPM por sección)
---   + Swing ajustable (%)
+--   + Swing incluido
 -- @about
 --   Calculadora de duraciones en milisegundos para las divisiones rítmicas
 --   (directas, tercillos, puntillos y swing) al BPM actual (o por sección si el
---   proyecto tiene tempo map).
+--   proyecto tiene tempo map). Ventana persistente: vuelve a ejecutar la acción
+--   para cerrarla.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
 -- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_sincroniza_tempo.lua
 
+--------------------------------------------------------------------------------
+-- Cálculos
+--------------------------------------------------------------------------------
 local function round2(n)
   return math.floor(n * 100 + 0.5) / 100
 end
@@ -60,33 +64,85 @@ local function compute_ms(bpm, div, kind, swing_pct)
   return round2(ms)
 end
 
-local function build_text(bpm, swing_pct)
+local function build_lines(bpm)
   local lines = {}
-  lines[#lines + 1] = string.format("BPM: %.2f\n", bpm)
+  lines[#lines + 1] = string.format("BPM: %.2f", bpm)
+  lines[#lines + 1] = ""
   for _, kind in ipairs({ "straight", "triplet", "dotted", "swing" }) do
-    lines[#lines + 1] = "---- " .. KIND_LABELS[kind] .. " ----"
+    lines[#lines + 1] = "-- " .. KIND_LABELS[kind] .. " --"
     for _, div in ipairs(NOTE_DIVISIONS) do
-      local ms = compute_ms(bpm, div, kind, swing_pct)
-      lines[#lines + 1] = string.format("%-5s %.2f ms", div, ms)
+      local ms = compute_ms(bpm, div, kind, 50)
+      lines[#lines + 1] = string.format("  %-5s %.2f ms", div, ms)
     end
     lines[#lines + 1] = ""
   end
-  return table.concat(lines, "\n")
+  return lines
 end
 
-local function main()
-  local tempos = get_tempos()
-  if #tempos == 1 then
-    reaper.ShowMessageBox(build_text(tempos[1].bpm, 50), "Sincroniza tempo", 0)
-  else
-    local parts = {}
-    for i, t in ipairs(tempos) do
-      parts[#parts + 1] = string.format(
-        "== Sección %d  (BPM %.2f%s) ==\n%s",
-        i, t.bpm, t.ts and "  " .. t.ts or "", build_text(t.bpm, 50))
+--------------------------------------------------------------------------------
+-- Toggle: abrir o cerrar la ventana gfx
+--------------------------------------------------------------------------------
+local EXT_SECTION = "enemigo_tempo"
+local EXT_KEY = "open"
+
+if reaper.GetExtState(EXT_SECTION, EXT_KEY) == "1" then
+  -- Cerrar (segundo disparo)
+  reaper.SetExtState(EXT_SECTION, EXT_KEY, "0", true)
+  reaper.gfx.quit()
+  return
+end
+
+-- Abrir
+reaper.SetExtState(EXT_SECTION, EXT_KEY, "1", true)
+
+local LINE_H = 16
+local MARGIN = 8
+local tempos = get_tempos()
+
+local function build_all_lines()
+  local all = {}
+  for i, t in ipairs(tempos) do
+    if #tempos > 1 then
+      all[#all + 1] = string.format("== Sección %d  (BPM %.2f%s) ==", i, t.bpm, t.ts and "  " .. t.ts or "")
+      all[#all + 1] = ""
     end
-    reaper.ShowMessageBox(table.concat(parts, "\n\n"), "Sincroniza tempo", 0)
+    for _, ln in ipairs(build_lines(t.bpm)) do
+      all[#all + 1] = ln
+    end
+    if i < #tempos then
+      all[#all + 1] = ""
+    end
   end
+  return all
 end
 
-main()
+local lines = build_all_lines()
+local w = 260
+local h = #lines * LINE_H + MARGIN * 2
+if h < 120 then h = 120 end
+
+reaper.gfx.init("Sincroniza tempo", w, h, 0, 100, 100)
+reaper.gfx.setfont(1, "monospace", 12)
+
+local function loop()
+  -- Si el usuario cerró la ventana con la X o se disparó el toggle, salir
+  if not reaper.gfx.update() or reaper.GetExtState(EXT_SECTION, EXT_KEY) ~= "1" then
+    reaper.SetExtState(EXT_SECTION, EXT_KEY, "0", true)
+    reaper.gfx.quit()
+    return
+  end
+
+  reaper.gfx.setfont(1, "monospace", 12)
+  reaper.gfx.setcolor(230, 230, 230, 255)
+  local y = MARGIN
+  for _, ln in ipairs(lines) do
+    reaper.gfx.x = MARGIN
+    reaper.gfx.y = y
+    reaper.gfx.drawstr(ln)
+    y = y + LINE_H
+  end
+
+  reaper.defer(loop)
+end
+
+reaper.defer(loop)
