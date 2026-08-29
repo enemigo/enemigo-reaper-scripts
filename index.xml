@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="23a42a3f6330eadb67ae3b18a00b0a5dab867967">
+<index version="1" name="enemigo-reaper-scripts" commit="2d4b26fbea37e5c4afe442ae60ea2a004306c11c">
   <category name="Scripts">
     <reapack name="pmn_compara_fx.lua" type="script" desc="pmn_Compara FX: A/B switch de la cadena FX de la pista seleccionada">
       <metadata>
@@ -24,6 +24,14 @@
 + Segundo disparo: restaura el estado original
 + Soporta master track (selección de pista 0)]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/23a42a3f6330eadb67ae3b18a00b0a5dab867967/Scripts/pmn_compara_fx.lua</source>
+      </version>
+      <version name="1.2" author="Patricio Maripani Navarro" time="2026-08-29T19:18:31Z">
+        <changelog><![CDATA[+ Eliminados los mensajes de éxito (silencioso)
++ Ignora los FX offline (no los toca ni los guarda)
++ Primer disparo: guarda el estado de los FX de la pista seleccionada e invierte activos<->inactivos
++ Segundo disparo: restaura el estado original
++ Soporta master track (selección de pista 0)]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/2d4b26fbea37e5c4afe442ae60ea2a004306c11c/Scripts/pmn_compara_fx.lua</source>
       </version>
     </reapack>
     <reapack name="pmn_desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
