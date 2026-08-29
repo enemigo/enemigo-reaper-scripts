@@ -5,15 +5,18 @@ Cada idea puede marcarse como `[ ]` pendiente o `[x]` hecha.
 
 ---
 
-## Monitorización (monitor_off / monitor_switch / monitor_toggle3 / monotor_dim / monitor_tonal_balance)
+## Monitorización (monitor_off / monitor_switch / monitor_dim / monitor_tonal_balance / monitor_ab)
 
 - [x] Eliminar `reaper.defer(function() end)` al final (deja el script "vivo" sin motivo).
 - [x] Añadir `reaper.RefreshToolbar2(self, 0)` tras `SetToggleCommandState` para que el highlight del botón se refresque.
 - [x] Unificar los 4 toggles en un solo script parametrizado por config (tabla de posiciones), manteniendo acciones separadas.
 - [x] Mostrar mensaje de error claro si no se encuentra el plugin en la posición configurada.
 - [x] Soportar posiciones configurables por proyecto (ExtState) en vez de hardcodear.
-- [x] **Detectar plugins por nombre, no por posición**: buscar "Sonarworks"/"Sienna" en la cadena de monitorización (`TrackFX_GetFXName`) en vez de `POS_x` hardcodeado. Robusto a reordenar la cadena.
+- [x] **Detectar plugins por nombre, no por posición**: buscar "SoundID"/"Sienna" en la cadena de monitorización (`TrackFX_GetFXName`) en vez de `POS_x` hardcodeado. Robusto a reordenar la cadena.
 - [x] **Persistir estado en `SetExtState`**: recordar qué plugin estaba activo entre sesiones y sincronizar el highlight del toolbar al abrir el proyecto.
+- [x] **Fallback por posición**: si no encuentra por nombre, usa `POSITIONS`/`POS_x` configurada.
+- [x] **Toggle robusto en monitor_switch**: si falta un plugin, alterna el existente; error si faltan ambos.
+- [x] Eliminar `monitor_toggle3` y `monitor_mult_sienna` (redundantes con monitor_switch).
 
 ## Freeze (freeze_reainsert / desarma_freeze)
 

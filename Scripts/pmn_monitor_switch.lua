@@ -1,9 +1,10 @@
 -- @description pmn_Monitor: alternar SoundID / Sienna
 -- @author Patricio Maripani Navarro
--- @version 2.3
+-- @version 2.4
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
 --   + Fallback por posición si no encuentra por nombre (fix: se activaba antes)
+--   + Toggle robusto: si falta un plugin, alterna el que existe; error si faltan ambos
 --   + Nombres por defecto: SoundID / Sienna
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
@@ -102,21 +103,30 @@ end
 --------------------------------------------------------------------------------
 local idxA = resolve_plugin(1)
 local idxB = resolve_plugin(2)
-if not idxA then
+
+if not idxA and not idxB then
   reaper.ShowMessageBox(
-    string.format("No se encontró el plugin \"%s\" en la cadena de monitorización.", PLUGINS[1]),
+    string.format("No se encontró ninguno de los plugins (%s) en la cadena de monitorización.",
+      table.concat(PLUGINS, ", ")),
     "Monitor switch", 0)
   return
 end
 
-local aEnabled = is_enabled(idxA)
-if idxB then
+local state
+if idxA and idxB then
+  -- Toggle limpio entre ambos: activa A si estaba apagado (o viceversa),
+  -- dejando siempre exactamente uno activo.
+  local aEnabled = is_enabled(idxA)
   set_enabled(idxA, not aEnabled)
   set_enabled(idxB, aEnabled)
+  state = not aEnabled
 else
-  set_enabled(idxA, not aEnabled)
+  -- Solo uno disponible: toggle on/off del que existe
+  local only = idxA or idxB
+  local on = is_enabled(only)
+  set_enabled(only, not on)
+  state = not on
 end
 
-local state = not aEnabled
 reaper.SetExtState(EXT_SECTION, EXT_KEY, state and "1" or "0", true)
 set_toolbar_state(state)

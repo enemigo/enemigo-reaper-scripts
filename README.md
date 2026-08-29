@@ -35,13 +35,11 @@ Estos dos scripts forman un par de "imprimir" (freeze) mediante ReaInsert (enví
 
 Alternan plugins de la cadena de monitorización del máster, actualizando el highlight del botón de toolbar (toggle). Posiciones: DIM=1, TONAL=2, SONARWORKS=4, SIENNA=5, EXTRA=6.
 
-- **`pmn_monitor_switch.lua`** — Alterna entre **Sonarworks** y **Sienna** (activa uno, desactiva el otro).
-- **`pmn_monitor_toggle3.lua`** — Cicla por **3 plugins** de monitorización (Sonarworks → Sienna → Extra → Sonarworks...).
-- **`pmn_monitor_off.lua`** — Bypass de **Sonarworks y Sienna** (toggle todo encendido / apagado).
+- **`pmn_monitor_switch.lua`** — Alterna entre **SoundID** y **Sienna** (activa uno, desactiva el otro; siempre deja uno activo). Si falta uno de los dos, toggle on/off del que existe.
+- **`pmn_monitor_off.lua`** — Bypass de **SoundID y Sienna** (toggle todo encendido / apagado).
 - **`pmn_monitor_dim.lua`** — Toggle de bypass del plugin **DIM** (dim/attenuación).
 - **`pmn_monitor_tonal_balance.lua`** — Muestra/oculta la ventana del plugin **Tonal Balance Control** (iZotope).
 - **`pmn_monitor_ab.lua`** — Muestra/oculta la ventana del plugin **A/B Meter**.
-- **`pmn_monitor_mult_sienna.lua`** — Cicla por **3 plugins** (Sonarworks → Sienna → Extra) y, al pasar a Extra, deja **Sienna offline**.
 
 ### Ruteo y estructura de mezcla
 
