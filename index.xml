@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="47aa3f4cc8cbc3ec42c0b0afb7c94ec5a922ea11">
+<index version="1" name="enemigo-reaper-scripts" commit="bc72c60c31eca4f07e21354855d973282f7d6706">
   <category name="Scripts">
     <reapack name="pmn_desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
       <metadata>
@@ -60,62 +60,6 @@
 + Fallback por posición si no encuentra por nombre
 + Mensaje de error si no se encuentra el plugin]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/50dd31fd5b2c67a9057ef43cfa840add83016b4b/Scripts/pmn_monitor_ab.lua</source>
-      </version>
-    </reapack>
-    <reapack name="pmn_monitor_dim.lua" type="script" desc="pmn_Monitor: toggle bypass plugin DIM">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Alterna el bypass del plugin DIM (dim/atenuaci\u243 ?n) en la cadena de monitorizaci\u243 ?n del m\u225 ?ster.\par}
-}
-]]></description>
-        <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
-      </metadata>
-      <version name="2.2" author="Patricio Maripani Navarro" time="2026-08-29T01:48:11Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Fallback por posición si no encuentra por nombre
-+ Estado persistido en ExtState y refresh de toolbar
-+ Eliminado reaper.defer() innecesario
-+ Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/50dd31fd5b2c67a9057ef43cfa840add83016b4b/Scripts/pmn_monitor_dim.lua</source>
-      </version>
-    </reapack>
-    <reapack name="pmn_monitor_off.lua" type="script" desc="pmn_Monitor: bypass SoundID y Sienna">
-      <metadata>
-        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
-{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
-\widowctrl\hyphauto
-
-{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Alterna el bypass de los plugins SoundID y Sienna de la cadena de monitorizaci\u243 ?n del m\u225 ?ster: si alguno est\u225 ? activo, los apaga todos; si est\u225 ?n apagados, los enciende.\par}
-}
-]]></description>
-        <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
-      </metadata>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Estado persistido en ExtState y refresh de toolbar
-+ Eliminado reaper.defer() innecesario
-+ Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_monitor_off.lua</source>
-      </version>
-      <version name="2.2" author="Patricio Maripani Navarro" time="2026-08-29T01:48:11Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Fallback por posición si no encuentra por nombre
-+ Estado persistido en ExtState y refresh de toolbar
-+ Eliminado reaper.defer() innecesario
-+ Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/50dd31fd5b2c67a9057ef43cfa840add83016b4b/Scripts/pmn_monitor_off.lua</source>
-      </version>
-      <version name="2.3" author="Patricio Maripani Navarro" time="2026-08-29T17:00:59Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Fallback por posición si no encuentra por nombre (fix: se activaba antes)
-+ Nombres por defecto: SoundID / Sienna
-+ Estado persistido en ExtState y refresh de toolbar
-+ Eliminado reaper.defer() innecesario
-+ Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/0cea9d35cf0be5207d4901a706acbea99d629bb5/Scripts/pmn_monitor_off.lua</source>
       </version>
     </reapack>
     <reapack name="pmn_monitor_switch.lua" type="script" desc="pmn_Monitor: alternar SoundID / Sienna">
@@ -197,6 +141,18 @@
 + Eliminado reaper.defer() innecesario
 + Pregunta el nombre del plugin si no lo encuentra]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/47aa3f4cc8cbc3ec42c0b0afb7c94ec5a922ea11/Scripts/pmn_monitor_switch.lua</source>
+      </version>
+      <version name="2.8" author="Patricio Maripani Navarro" time="2026-08-29T17:21:07Z">
+        <changelog><![CDATA[+ Fix: TrackFX_GetEnabled puede devolver booleano (is_enabled y log)
++ Eliminado log de debug
++ Detección de plugins por nombre (ya no depende de posición fija)
++ Fallback por posición si no encuentra por nombre (fix: se activaba antes)
++ Toggle robusto: si falta un plugin, alterna el que existe; error si faltan ambos
++ Nombres por defecto: SoundID / Sienna
++ Estado persistido en ExtState y refresh de toolbar
++ Eliminado reaper.defer() innecesario
++ Pregunta el nombre del plugin si no lo encuentra]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/bc72c60c31eca4f07e21354855d973282f7d6706/Scripts/pmn_monitor_switch.lua</source>
       </version>
     </reapack>
     <reapack name="pmn_monitor_tonal_balance.lua" type="script" desc="pmn_Monitor: mostrar/ocultar Tonal Balance Control">
