@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="1a7be140b1954ae77b5f31cef2784c87c4ac4725">
+<index version="1" name="enemigo-reaper-scripts" commit="acb87464ae6e338103141d667f55cb9179fcd93b">
   <category name="Scripts">
     <reapack name="pmn_desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
       <metadata>
@@ -224,7 +224,7 @@
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
 \widowctrl\hyphauto
 
-{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Calculadora de duraciones en milisegundos para las divisiones r\u237 ?tmicas (directas, tercillos, puntillos y swing) al BPM actual. Incluye un bot\u243 ?n TAP tempo que calcula el BPM al hacer clic (solo visual, no modifica el proyecto). Ventana persistente: vuelve a ejecutar la acci\u243 ?n para cerrarla.\par}
+{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Calculadora de duraciones en milisegundos para las divisiones r\u237 ?tmicas (directas, tresillos, puntillos y swing) al BPM actual. Incluye un bot\u243 ?n TAP tempo que calcula el BPM al hacer clic (solo visual, no modifica el proyecto). Ventana persistente: vuelve a ejecutar la acci\u243 ?n para cerrarla.\par}
 }
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
@@ -306,6 +306,15 @@
 + División 1/64 añadida
 + Swing incluido]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1a7be140b1954ae77b5f31cef2784c87c4ac4725/Scripts/pmn_sincroniza_tempo.lua</source>
+      </version>
+      <version name="3.5" author="Patricio Maripani Navarro" time="2026-08-29T17:42:38Z">
+        <changelog><![CDATA[+ Fallback con pcall: si la ventana gfx falla, muestra la tabla clásica (ShowMessageBox)
++ Corregido "Tercillo" -> "Tresillo"
++ Fix: usar reaper.defer (no gfx.defer) para el loop
++ Fix: usar la API gfx global (no reaper.gfx)
++ Ventana gfx nativa con toggle y botón TAP tempo (solo muestra BPM)
++ Valores redondeados a 2 decimales, división 1/64, swing]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/acb87464ae6e338103141d667f55cb9179fcd93b/Scripts/pmn_sincroniza_tempo.lua</source>
       </version>
     </reapack>
     <reapack name="pmn_solo_bus_a.lua" type="script" desc="pmn_Solo bus (A/B/C/D/VOX): toggle select + solo con creación">
