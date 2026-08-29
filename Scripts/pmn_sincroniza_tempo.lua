@@ -1,7 +1,8 @@
 -- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (toggle + tap tempo)
 -- @author Patricio Maripani Navarro
--- @version 3.7
+-- @version 3.8
 -- @changelog
+--   + Fix: si el flag quedó "abierta" de una sesión previa, cierra y reabre (siempre abre al disparar)
 --   + Fuente más grande (15) y ventana más amplia
 --   + Ya no cierra con el 2do disparo: si está abierta no crea otra instancia; solo se cierra con la X
 --   + Fix: usar gfx.set (valores 0-1) en vez de gfx.setcolor
@@ -82,11 +83,12 @@ local function run_gfx()
   local EXT_KEY = "open"
 
   if reaper.GetExtState(EXT_SECTION, EXT_KEY) == "1" then
-    -- Ya está abierta: no crear otra instancia (solo se cierra con la X)
-    return
+    -- Flag quedó "abierta" de una sesión previa: cerrar cualquier instancia y reabrir
+    reaper.SetExtState(EXT_SECTION, EXT_KEY, "0", true)
+    pcall(function() gfx.quit() end)
   end
 
-  -- Abrir
+  -- Abrir siempre (cada disparo trae la ventana al frente, sin acumular copias)
   reaper.SetExtState(EXT_SECTION, EXT_KEY, "1", true)
 
   local LINE_H = 20
