@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="c224a80c8e00d07c3192e21191f613b079fef551">
+<index version="1" name="enemigo-reaper-scripts" commit="69f16811a274a8880dad94c9c332483876e4ee74">
   <category name="Scripts">
     <reapack name="pmn_desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
       <metadata>
@@ -37,6 +37,42 @@
 + Maneja el estado de transporte (guarda play/record y lo retoma)
 + Verifica tras la grabación que las takes no estén vacías]]></changelog>
         <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_freeze_reainsert.lua</source>
+      </version>
+    </reapack>
+    <reapack name="pmn_monitor_ab.lua" type="script" desc="pmn_Monitor: mostrar/ocultar A/B Meter">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Muestra u oculta la ventana del plugin A/B Meter en la cadena de monitorizaci\u243 ?n del m\u225 ?ster.\par}
+}
+]]></description>
+        <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
+      </metadata>
+      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-29T01:42:07Z">
+        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
++ Mensaje de error si no se encuentra el plugin]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/69f16811a274a8880dad94c9c332483876e4ee74/Scripts/pmn_monitor_ab.lua</source>
+      </version>
+    </reapack>
+    <reapack name="pmn_monitor_mult_sienna.lua" type="script" desc="pmn_Monitor: alternar Sonarworks / Sienna / Extra (Sienna offline en Extra)">
+      <metadata>
+        <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \fs24 \sa180 \li0 \fi0 Cicla entre tres plugins de monitorizaci\u243 ?n del m\u225 ?ster (Sonarworks, Sienna y Extra). Al pasar a "Extra" deja Sienna offline; al volver a Sonarworks la reactiva.\par}
+}
+]]></description>
+        <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
+      </metadata>
+      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-29T01:42:07Z">
+        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
++ Estado persistido en ExtState y refresh de toolbar
++ Eliminado reaper.defer() innecesario
++ Pregunta el nombre del plugin si no lo encuentra]]></changelog>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/69f16811a274a8880dad94c9c332483876e4ee74/Scripts/pmn_monitor_mult_sienna.lua</source>
       </version>
     </reapack>
     <reapack name="pmn_monitor_off.lua" type="script" desc="pmn_Monitor: bypass Sonarworks y Sienna">
