@@ -9,7 +9,7 @@
 --   Con varias pistas seleccionadas, enruta todas a la primera: desactiva su master send,
 --   copia el color de la pista destino y crea el envío solo si no existe (no duplica).
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_rutea_a_seleccionado.lua
+-- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_rutea_a_seleccionado.lua
 
 --[[
  * ReaScript Name: Enviar pistas seleccionadas a la primera (sin duplicar envíos y replicando color)

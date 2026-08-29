@@ -18,7 +18,7 @@
 --   [main] pmn_solo_bus_d.lua
 --   [main] pmn_solo_bus_vox.lua
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_solo_bus_a.lua
+-- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_solo_bus_a.lua
 
 local script_dir = debug.getinfo(1, "S").source:match("@?(.*)[/\\][^/\\]*$")
 local lib = dofile(script_dir .. "/pmn_solo_bus_lib.lua")

@@ -10,7 +10,7 @@
 --   Alterna entre los plugins de monitorización A y B (Sonarworks / Sienna) en la cadena
 --   de monitorización del máster: activa uno y desactiva el otro.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_monitor_switch.lua
+-- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_monitor_switch.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)

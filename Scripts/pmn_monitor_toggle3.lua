@@ -10,7 +10,7 @@
 --   Cicla entre tres plugins de monitorización del máster (Sonarworks, Sienna y Extra),
 --   activando uno y desactivando los demás.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_monitor_toggle3.lua
+-- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_monitor_toggle3.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)

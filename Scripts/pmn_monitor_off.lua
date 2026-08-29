@@ -10,7 +10,7 @@
 --   Alterna el bypass de los plugins Sonarworks y Sienna de la cadena de monitorización
 --   del máster: si alguno está activo, los apaga todos; si están apagados, los enciende.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_monitor_off.lua
+-- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_monitor_off.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)

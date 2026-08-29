@@ -9,7 +9,7 @@
 --   Muestra u oculta la ventana del plugin Tonal Balance Control en la cadena
 --   de monitorización del máster.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_monitor_tonal_balance.lua
+-- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_monitor_tonal_balance.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)

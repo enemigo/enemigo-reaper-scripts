@@ -11,7 +11,7 @@
 --   estado de master send y sends. Decide mono/estéreo de forma inteligente y graba desde el inicio.
 -- @requires SWS Extension
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/Scripts/pmn_freeze_reainsert.lua
+-- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_freeze_reainsert.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG
