@@ -1,7 +1,9 @@
 -- @description pmn_Sincroniza tempo: calculadora de ms por división rítmica (toggle + tap tempo)
 -- @author Patricio Maripani Navarro
--- @version 3.6
+-- @version 3.7
 -- @changelog
+--   + Fuente más grande (15) y ventana más amplia
+--   + Ya no cierra con el 2do disparo: si está abierta no crea otra instancia; solo se cierra con la X
 --   + Fix: usar gfx.set (valores 0-1) en vez de gfx.setcolor
 --   + Fallback con pcall: si la ventana gfx falla, muestra la tabla clásica (ShowMessageBox)
 --   + Corregido "Tercillo" -> "Tresillo"
@@ -80,28 +82,26 @@ local function run_gfx()
   local EXT_KEY = "open"
 
   if reaper.GetExtState(EXT_SECTION, EXT_KEY) == "1" then
-    -- Cerrar (segundo disparo)
-    reaper.SetExtState(EXT_SECTION, EXT_KEY, "0", true)
-    gfx.quit()
+    -- Ya está abierta: no crear otra instancia (solo se cierra con la X)
     return
   end
 
   -- Abrir
   reaper.SetExtState(EXT_SECTION, EXT_KEY, "1", true)
 
-  local LINE_H = 16
+  local LINE_H = 20
   local MARGIN = 8
-  local BTN_H = 40
+  local BTN_H = 44
   local BTN_Y_GAP = 8
   local current_bpm = reaper.Master_GetTempo()
   local lines = build_lines(current_bpm)
 
-  local w = 260
+  local w = 300
   local h = #lines * LINE_H + MARGIN * 2 + BTN_Y_GAP + BTN_H
-  if h < 180 then h = 180 end
+  if h < 200 then h = 200 end
 
   gfx.init("Sincroniza tempo", w, h, 0, 100, 100)
-  gfx.setfont(1, "monospace", 12)
+  gfx.setfont(1, "monospace", 15)
 
   local btn_x = MARGIN
   local btn_y = h - MARGIN - BTN_H
@@ -119,7 +119,7 @@ local function run_gfx()
       return
     end
 
-    gfx.setfont(1, "monospace", 12)
+    gfx.setfont(1, "monospace", 15)
 
     local mc = gfx.mouse_cap or 0
     local click = (mc % 2 == 1) and (prev_mouse_cap % 2 == 0)
@@ -160,7 +160,7 @@ local function run_gfx()
     gfx.set(0.82, 0.86, 0.94, 1)
     gfx.rect(btn_x, btn_y, btn_w, BTN_H, 0)
     gfx.x = btn_x + MARGIN
-    gfx.y = btn_y + 12
+    gfx.y = btn_y + 14
     gfx.drawstr(tap_status)
 
     reaper.defer(loop)
