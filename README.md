@@ -53,6 +53,7 @@ Alternan plugins de la cadena de monitorización del máster, actualizando el hi
 - **`pmn_solo_bus_a.lua`** — Paquete **Solo bus** con 5 acciones: `solo_bus_a/b/c/d/vox.lua` (bus "A", "B", "C", "D" y "VOX"), cada una con su propio atajo. Toggle de **selección y solo del bus**: busca por coincidencia difusa de nombre, crea el bus si no existe, des-solo el resto y lo trae a la vista. Lógica compartida en `pmn_solo_bus_lib.lua`.
 
 - **`pmn_compara_fx.lua`** — **A/B switch** de la cadena FX de la pista seleccionada: guarda el estado de los FX y los invierte (activos↔inactivos); vuelve a ejecutar para restaurar el original. Ignora los FX offline.
+- **`pmn_toggle_fx.lua`** — Alterna el bypass del **último FX tocado** (el enfocado, con ventana abierta). No requiere pista seleccionada.
 
 ### Utilidades
 
