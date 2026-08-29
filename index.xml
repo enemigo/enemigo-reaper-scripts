@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<index version="1" name="enemigo-reaper-scripts" commit="d46de2e9c2a8e4f450fa52900b248b484530a5ef">
+<index version="1" name="enemigo-reaper-scripts" commit="1d2056ed6668aae9849cf3bcd2410316ad04f746">
   <category name="Scripts">
-    <reapack name="desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
+    <reapack name="pmn_desarma_freeze.lua" type="script" desc="pmn_EXIT Freeze: set ORIGINAL track FX (active) to OFFLINE, disable ORIGINAL routing, ensure FREEZE feeds sends">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -12,25 +12,15 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.2" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/desarma_freeze.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Script reversible: guarda el estado previo y permite restaurarlo (MODE = "restore")
-+ Eliminada redundancia: el send de impresión se gestiona según la config, no duplicado
-+ Mensajes de error más claros]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/desarma_freeze.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:29:48Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Prefijo pmn_ en el nombre de acción
 + Script reversible: guarda el estado previo y permite restaurarlo (MODE = "restore")
 + Eliminada redundancia: el send de impresión se gestiona según la config, no duplicado
 + Mensajes de error más claros]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/desarma_freeze.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_desarma_freeze.lua</source>
       </version>
     </reapack>
-    <reapack name="freeze_reainsert.lua" type="script" desc="pmn_AUTO FREEZE ReaInsert (copy routing, color, MASTER SEND state, smart mono/stereo, go to 0 and RECORD)">
+    <reapack name="pmn_freeze_reainsert.lua" type="script" desc="pmn_AUTO FREEZE ReaInsert (copy routing, color, MASTER SEND state, smart mono/stereo, go to 0 and RECORD)">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -41,25 +31,15 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.0" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/freeze_reainsert.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Vacía la cadena FX de la pista FREEZE al crearla
-+ Maneja el estado de transporte (guarda play/record y lo retoma)
-+ Verifica tras la grabación que las takes no estén vacías]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/freeze_reainsert.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:29:48Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Prefijo pmn_ en el nombre de acción
 + Vacía la cadena FX de la pista FREEZE al crearla
 + Maneja el estado de transporte (guarda play/record y lo retoma)
 + Verifica tras la grabación que las takes no estén vacías]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/freeze_reainsert.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_freeze_reainsert.lua</source>
       </version>
     </reapack>
-    <reapack name="monitor_off.lua" type="script" desc="pmn_Monitor: bypass Sonarworks y Sienna">
+    <reapack name="pmn_monitor_off.lua" type="script" desc="pmn_Monitor: bypass Sonarworks y Sienna">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -70,25 +50,15 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.0" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/monitor_off.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Estado persistido en ExtState y refresh de toolbar
-+ Eliminado reaper.defer() innecesario]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/monitor_off.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:03:39Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
 + Estado persistido en ExtState y refresh de toolbar
 + Eliminado reaper.defer() innecesario
 + Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/0eeb5b3a7cc59de7e36779fa3f6f8025b30c7308/Scripts/monitor_off.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_monitor_off.lua</source>
       </version>
     </reapack>
-    <reapack name="monitor_switch.lua" type="script" desc="pmn_Monitor: alternar Sonarworks / Sienna">
+    <reapack name="pmn_monitor_switch.lua" type="script" desc="pmn_Monitor: alternar Sonarworks / Sienna">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -99,25 +69,15 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.0" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/monitor_switch.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Estado persistido en ExtState y refresh de toolbar
-+ Eliminado reaper.defer() innecesario]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/monitor_switch.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:03:39Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
 + Estado persistido en ExtState y refresh de toolbar
 + Eliminado reaper.defer() innecesario
 + Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/0eeb5b3a7cc59de7e36779fa3f6f8025b30c7308/Scripts/monitor_switch.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_monitor_switch.lua</source>
       </version>
     </reapack>
-    <reapack name="monitor_toggle3.lua" type="script" desc="pmn_Monitor: alternar 3 plugins (Sonarworks / Sienna / Extra)">
+    <reapack name="pmn_monitor_toggle3.lua" type="script" desc="pmn_Monitor: alternar 3 plugins (Sonarworks / Sienna / Extra)">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -128,25 +88,15 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.0" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/monitor_toggle3.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Estado persistido en ExtState y refresh de toolbar
-+ Eliminado reaper.defer() innecesario]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/monitor_toggle3.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:03:39Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
 + Estado persistido en ExtState y refresh de toolbar
 + Eliminado reaper.defer() innecesario
 + Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/0eeb5b3a7cc59de7e36779fa3f6f8025b30c7308/Scripts/monitor_toggle3.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_monitor_toggle3.lua</source>
       </version>
     </reapack>
-    <reapack name="monitor_tonal_balance.lua" type="script" desc="pmn_Monitor: mostrar/ocultar Tonal Balance Control">
+    <reapack name="pmn_monitor_tonal_balance.lua" type="script" desc="pmn_Monitor: mostrar/ocultar Tonal Balance Control">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -157,23 +107,14 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.0" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/monitor_tonal_balance.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Mensaje de error si no se encuentra el plugin]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/monitor_tonal_balance.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:03:39Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
 + Mensaje de error si no se encuentra el plugin
 + Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/0eeb5b3a7cc59de7e36779fa3f6f8025b30c7308/Scripts/monitor_tonal_balance.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_monitor_tonal_balance.lua</source>
       </version>
     </reapack>
-    <reapack name="monotor_dim.lua" type="script" desc="pmn_Monitor: toggle bypass plugin DIM">
+    <reapack name="pmn_monotor_dim.lua" type="script" desc="pmn_Monitor: toggle bypass plugin DIM">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -184,25 +125,15 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.0" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/monotor_dim.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
-+ Estado persistido en ExtState y refresh de toolbar
-+ Eliminado reaper.defer() innecesario]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/monotor_dim.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:03:39Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Detección de plugins por nombre (ya no depende de posición fija)
 + Estado persistido en ExtState y refresh de toolbar
 + Eliminado reaper.defer() innecesario
 + Pregunta el nombre del plugin si no lo encuentra]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/0eeb5b3a7cc59de7e36779fa3f6f8025b30c7308/Scripts/monotor_dim.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_monotor_dim.lua</source>
       </version>
     </reapack>
-    <reapack name="rutea_a_seleccionado.lua" type="script" desc="pmn_Enviar pistas seleccionadas a la primera (sin duplicar envíos y replicando color)">
+    <reapack name="pmn_rutea_a_seleccionado.lua" type="script" desc="pmn_Enviar pistas seleccionadas a la primera (sin duplicar envíos y replicando color)">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -213,24 +144,14 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.1" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/rutea_a_seleccionado.lua</source>
-      </version>
-      <version name="1.2" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
+      <version name="1.3" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Validación de punteros con ValidatePtr
 + Reporta cuántas pistas se enrutaron
 + Opción de aplicar volumen/pánico al send creado]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/rutea_a_seleccionado.lua</source>
-      </version>
-      <version name="1.3" author="Patricio Maripani Navarro" time="2026-08-29T00:29:48Z">
-        <changelog><![CDATA[+ Validación de punteros con ValidatePtr
-+ Reporta cuántas pistas se enrutaron
-+ Opción de aplicar volumen/pánico al send creado]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/rutea_a_seleccionado.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_rutea_a_seleccionado.lua</source>
       </version>
     </reapack>
-    <reapack name="setea_B.lua" type="script" desc="pmn_Estructura de mezcla completa con ruteo automático (batería, grupos, voces, guitarras, bajos)">
+    <reapack name="pmn_setea_B.lua" type="script" desc="pmn_Estructura de mezcla completa con ruteo automático (batería, grupos, voces, guitarras, bajos)">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -241,28 +162,16 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="4.0" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/setea_B.lua</source>
-      </version>
-      <version name="4.1" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
+      <version name="4.2" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Todo el proceso en un único bloque de Undo (deshacer de una vez)
 + Opción "modo seco" (REORDER_TRACKS = false): no reordena pistas
 + Ignora pistas MIDI en el ruteo automático por prefijo
 + PreventUIRefresh al reordenar
 + Nuevos alias de reconocimiento (kick, bombo, snare trg, etc.)]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/setea_B.lua</source>
-      </version>
-      <version name="4.2" author="Patricio Maripani Navarro" time="2026-08-29T00:29:48Z">
-        <changelog><![CDATA[+ Todo el proceso en un único bloque de Undo (deshacer de una vez)
-+ Opción "modo seco" (REORDER_TRACKS = false): no reordena pistas
-+ Ignora pistas MIDI en el ruteo automático por prefijo
-+ PreventUIRefresh al reordenar
-+ Nuevos alias de reconocimiento (kick, bombo, snare trg, etc.)]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/setea_B.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_setea_B.lua</source>
       </version>
     </reapack>
-    <reapack name="sincroniza_tempo.lua" type="script" desc="pmn_Sincroniza tempo: calculadora de ms por división rítmica (ReaImGui)">
+    <reapack name="pmn_sincroniza_tempo.lua" type="script" desc="pmn_Sincroniza tempo: calculadora de ms por división rítmica (ReaImGui)">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -273,20 +182,7 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.0" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/sincroniza_tempo.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Ventana interactiva (ReaImGui) en lugar de ShowMessageBox
-+ BPM editable en vivo, valores redondeados a 2 decimales
-+ División 1/64 añadida
-+ Soporte de tempo maps (varios BPM por sección)
-+ Copiar valor al portapapeles con un clic
-+ Swing ajustable (%)]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/sincroniza_tempo.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:29:48Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Prefijo pmn_ en el nombre de acción
 + Ventana interactiva (ReaImGui) en lugar de ShowMessageBox
 + BPM editable en vivo, valores redondeados a 2 decimales
@@ -294,10 +190,10 @@
 + Soporte de tempo maps (varios BPM por sección)
 + Copiar valor al portapapeles con un clic
 + Swing ajustable (%)]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/sincroniza_tempo.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_sincroniza_tempo.lua</source>
       </version>
     </reapack>
-    <reapack name="solo_bus_a.lua" type="script" desc="pmn_Solo bus (A/B/C/D/VOX): toggle select + solo con creación">
+    <reapack name="pmn_solo_bus_a.lua" type="script" desc="pmn_Solo bus (A/B/C/D/VOX): toggle select + solo con creación">
       <metadata>
         <description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
 {\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
@@ -308,32 +204,17 @@
 ]]></description>
         <link rel="website">https://github.com/enemigo/enemigo-reaper-scripts</link>
       </metadata>
-      <version name="1.5" author="Patricio Maripani Navarro" time="2026-08-28T23:37:36Z">
-        <changelog><![CDATA[+ Release ReaPack]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/a1a09c86255b24e541eab34baa234a0b4f787b4e/Scripts/solo_bus_a.lua</source>
-      </version>
-      <version name="2.0" author="Patricio Maripani Navarro" time="2026-08-28T23:44:51Z">
-        <changelog><![CDATA[+ Refactorizado a librería compartida (solo_bus_lib.lua)
-+ Un script por bus (A/B/C/D/VOX): cada bus con su propia acción/atajo
-+ Paquete ReaPack único: instala los 5 buses + la librería]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/solo_bus_a.lua</source>
-        <source main="main" file="solo_bus_lib.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/solo_bus_lib.lua</source>
-        <source main="main" file="solo_bus_b.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/solo_bus_b.lua</source>
-        <source main="main" file="solo_bus_c.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/solo_bus_c.lua</source>
-        <source main="main" file="solo_bus_d.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/solo_bus_d.lua</source>
-        <source main="main" file="solo_bus_vox.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/385f7575edd7ba23ad146ff73d14fd6ab3abfb66/Scripts/solo_bus_vox.lua</source>
-      </version>
-      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:29:48Z">
+      <version name="2.1" author="Patricio Maripani Navarro" time="2026-08-29T00:46:13Z">
         <changelog><![CDATA[+ Prefijo pmn_ en el nombre de acción
-+ Refactorizado a librería compartida (solo_bus_lib.lua)
++ Refactorizado a librería compartida (pmn_solo_bus_lib.lua)
 + Un script por bus (A/B/C/D/VOX): cada bus con su propia acción/atajo
 + Paquete ReaPack único: instala los 5 buses + la librería]]></changelog>
-        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/solo_bus_a.lua</source>
-        <source file="solo_bus_lib.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/solo_bus_lib.lua</source>
-        <source main="main" file="solo_bus_b.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/solo_bus_b.lua</source>
-        <source main="main" file="solo_bus_c.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/solo_bus_c.lua</source>
-        <source main="main" file="solo_bus_d.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/solo_bus_d.lua</source>
-        <source main="main" file="solo_bus_vox.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/d46de2e9c2a8e4f450fa52900b248b484530a5ef/Scripts/solo_bus_vox.lua</source>
+        <source main="main">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_a.lua</source>
+        <source file="pmn_solo_bus_lib.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_lib.lua</source>
+        <source main="main" file="pmn_solo_bus_b.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_b.lua</source>
+        <source main="main" file="pmn_solo_bus_c.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_c.lua</source>
+        <source main="main" file="pmn_solo_bus_d.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_d.lua</source>
+        <source main="main" file="pmn_solo_bus_vox.lua">https://github.com/enemigo/enemigo-reaper-scripts/raw/1d2056ed6668aae9849cf3bcd2410316ad04f746/Scripts/pmn_solo_bus_vox.lua</source>
       </version>
     </reapack>
   </category>
