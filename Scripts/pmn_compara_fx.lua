@@ -1,7 +1,8 @@
 -- @description pmn_Compara FX: A/B switch de la cadena FX de la pista seleccionada
 -- @author Patricio Maripani Navarro
--- @version 1.0
+-- @version 1.1
 -- @changelog
+--   + Ignora los FX offline (no los toca ni los guarda)
 --   + Primer disparo: guarda el estado de los FX de la pista seleccionada e invierte activos<->inactivos
 --   + Segundo disparo: restaura el estado original
 --   + Soporta master track (selección de pista 0)
@@ -9,7 +10,7 @@
 --   A/B switch de la cadena FX de la pista seleccionada. Al disparar por primera vez
 --   guarda qué FX estaban activos y los invierte (los activos se apagan y viceversa).
 --   Al disparar de nuevo, restaura el estado original. Útil para comparar
---   procesado con/sin FX.
+--   procesado con/sin FX. Los FX offline se ignoran.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
 -- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_compara_fx.lua
 
@@ -33,15 +34,21 @@ local function snapshot_track(track)
   local n = reaper.TrackFX_GetCount(track)
   local bits = {}
   for i = 0, n - 1 do
-    bits[#bits + 1] = reaper.TrackFX_GetEnabled(track, i) and "1" or "0"
+    if reaper.TrackFX_GetOffline(track, i) then
+      bits[#bits + 1] = "x"  -- offline: no se toca
+    else
+      bits[#bits + 1] = reaper.TrackFX_GetEnabled(track, i) and "1" or "0"
+    end
   end
   return table.concat(bits, "")
 end
 
 local function apply_snapshot(track, snap)
   for i = 0, #snap - 1 do
-    local enabled = snap:sub(i + 1, i + 1) == "1"
-    reaper.TrackFX_SetEnabled(track, i, enabled)
+    local c = snap:sub(i + 1, i + 1)
+    if c ~= "x" then
+      reaper.TrackFX_SetEnabled(track, i, c == "1")
+    end
   end
 end
 
@@ -67,13 +74,17 @@ local function main()
     reaper.SetExtState(EXT_SECTION, key, "", true)
     reaper.ShowMessageBox("Estado original restaurado.", "Compara FX", 0)
   else
-    -- Guardar estado actual e invertir
+    -- Guardar estado actual e invertir (omitiendo offline)
     local snap = snapshot_track(track)
     reaper.SetExtState(EXT_SECTION, key, snap, true)
+    local toggled = 0
     for i = 0, n - 1 do
-      reaper.TrackFX_SetEnabled(track, i, not reaper.TrackFX_GetEnabled(track, i))
+      if not reaper.TrackFX_GetOffline(track, i) then
+        reaper.TrackFX_SetEnabled(track, i, not reaper.TrackFX_GetEnabled(track, i))
+        toggled = toggled + 1
+      end
     end
-    reaper.ShowMessageBox("FX invertidos (activos<->inactivos). Vuelve a ejecutar para restaurar.", "Compara FX", 0)
+    reaper.ShowMessageBox(string.format("FX invertidos (%d). Vuelve a ejecutar para restaurar.", toggled), "Compara FX", 0)
   end
 end
 

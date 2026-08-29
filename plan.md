@@ -63,9 +63,11 @@ Cada idea puede marcarse como `[ ]` pendiente o `[x]` hecha.
   - Tablas por grupo (directo / tresillo / puntillo / swing) para consulta rápida.
   - Botón TAP que muestra el BPM (no modifica el proyecto).
 
-## compara_fx.lua (nuevo)
+## compara_fx.lua / toggle_fx.lua
 
-- [x] Crear A/B switch por pista: guarda estado de FX y los invierte; restaura al volver a ejecutar.
+- [x] Crear A/B switch por pista (compara_fx): guarda estado de FX y los invierte; restaura al volver a ejecutar.
+- [x] Ignorar FX offline en ambos scripts.
+- [x] Crear toggle_fx: usa el FX enfocado (GetFocusedFX) para hallar la pista y togglea todos sus FX.
 
 ## General / infraestructura
 - [x] Headers `@changelog`, `@about`, `@provides` consistentes para ReaPack.
