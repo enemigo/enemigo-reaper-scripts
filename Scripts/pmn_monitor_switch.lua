@@ -1,7 +1,8 @@
 -- @description pmn_Monitor: alternar SoundID / Sienna
 -- @author Patricio Maripani Navarro
--- @version 2.5
+-- @version 2.6
 -- @changelog
+--   + Fix: TrackFX_GetEnabled puede devolver booleano (is_enabled y log)
 --   + Detección de plugins por nombre (ya no depende de posición fija)
 --   + Fallback por posición si no encuentra por nombre (fix: se activaba antes)
 --   + Toggle robusto: si falta un plugin, alterna el que existe; error si faltan ambos
@@ -56,7 +57,9 @@ local function set_enabled(idx, enabled)
 end
 
 local function is_enabled(idx)
-  return idx and (reaper.TrackFX_GetEnabled(track, RECFX + idx) == 1) or false
+  if not idx then return false end
+  local v = reaper.TrackFX_GetEnabled(track, RECFX + idx)
+  return (v == 1) or (v == true)
 end
 
 --------------------------------------------------------------------------------
@@ -76,7 +79,7 @@ local function log_rec_chain()
   for i = 0, cnt - 1 do
     local ok, name = reaper.TrackFX_GetFXName(track, RECFX + i, "")
     local en = reaper.TrackFX_GetEnabled(track, RECFX + i)
-    log(string.format("  [%d] (0-based %d) %s  enabled=%d", i + 1, i, ok and name or "?", en))
+    log(string.format("  [%d] (0-based %d) %s  enabled=%s", i + 1, i, ok and name or "?", tostring(en)))
   end
 end
 
