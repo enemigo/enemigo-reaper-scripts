@@ -1,20 +1,22 @@
 -- @description pmn_Monitor: toggle bypass plugin DIM
 -- @author Patricio Maripani Navarro
--- @version 2.1
+-- @version 2.2
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
+--   + Fallback por posición si no encuentra por nombre
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
 --   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
 --   Alterna el bypass del plugin DIM (dim/atenuación) en la cadena de monitorización del máster.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
--- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_monotor_dim.lua
+-- @source https://github.com/enemigo/enemigo-reaper-scripts/raw/main/Scripts/pmn_monitor_dim.lua
 
 --------------------------------------------------------------------------------
 -- CONFIG (personalizá libremente)
 --------------------------------------------------------------------------------
 local PLUGIN = "Dim"               -- subcadena para localizar el plugin
+local POS_DIM = 1                  -- fallback: posición 1-based en la cadena de monitorización
 local EXT_SECTION = "enemigo_monitor"
 local EXT_KEY = "dim_state"
 
@@ -36,6 +38,15 @@ local function find_recfx(substr)
   return nil
 end
 
+-- Fallback por posición 1-based (si el plugin no aparece por nombre)
+local function recfx_by_pos(pos)
+  local cnt = reaper.TrackFX_GetRecCount(track)
+  if pos and pos >= 1 and pos <= cnt then
+    return pos - 1
+  end
+  return nil
+end
+
 local function set_toolbar_state(state)
   local _, _, _, cmd = reaper.get_action_context()
   if cmd then
@@ -45,13 +56,18 @@ local function set_toolbar_state(state)
 end
 
 --------------------------------------------------------------------------------
--- Resolución de plugins: ExtState -> config -> pregunta al usuario
+-- Resolución de plugins: ExtState -> config (nombre) -> posición -> pregunta
 --------------------------------------------------------------------------------
 local function resolve_plugin()
   local stored = reaper.GetExtState(EXT_SECTION, "plugin_1")
   local name = (stored ~= "") and stored or PLUGIN
   local found = find_recfx(name)
   if found then return found end
+
+  if not stored then
+    local bypos = recfx_by_pos(POS_DIM)
+    if bypos then return bypos end
+  end
 
   local retval, input = reaper.GetUserInputs(
     "Monitor dim: plugin no encontrado",

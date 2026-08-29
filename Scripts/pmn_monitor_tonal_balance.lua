@@ -1,8 +1,9 @@
 -- @description pmn_Monitor: mostrar/ocultar Tonal Balance Control
 -- @author Patricio Maripani Navarro
--- @version 2.1
+-- @version 2.2
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
+--   + Fallback por posición si no encuentra por nombre
 --   + Mensaje de error si no se encuentra el plugin
 --   + Pregunta el nombre del plugin si no lo encuentra
 -- @about
@@ -15,6 +16,7 @@
 -- CONFIG (personalizá libremente)
 --------------------------------------------------------------------------------
 local PLUGIN = "Tonal Balance"     -- subcadena para localizar el plugin
+local POS_TONAL = 2                 -- fallback: posición 1-based en la cadena de monitorización
 local EXT_SECTION = "enemigo_monitor"
 
 --------------------------------------------------------------------------------
@@ -35,14 +37,28 @@ local function find_recfx(substr)
   return nil
 end
 
+-- Fallback por posición 1-based (si el plugin no aparece por nombre)
+local function recfx_by_pos(pos)
+  local cnt = reaper.TrackFX_GetRecCount(track)
+  if pos and pos >= 1 and pos <= cnt then
+    return pos - 1
+  end
+  return nil
+end
+
 --------------------------------------------------------------------------------
--- Resolución de plugins: ExtState -> config -> pregunta al usuario
+-- Resolución de plugins: ExtState -> config (nombre) -> posición -> pregunta
 --------------------------------------------------------------------------------
 local function resolve_plugin()
   local stored = reaper.GetExtState(EXT_SECTION, "plugin_tonal")
   local name = (stored ~= "") and stored or PLUGIN
   local found = find_recfx(name)
   if found then return found end
+
+  if not stored then
+    local bypos = recfx_by_pos(POS_TONAL)
+    if bypos then return bypos end
+  end
 
   local retval, input = reaper.GetUserInputs(
     "Monitor Tonal Balance: plugin no encontrado",

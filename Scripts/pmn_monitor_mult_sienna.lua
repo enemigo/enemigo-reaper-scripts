@@ -1,8 +1,9 @@
 -- @description pmn_Monitor: alternar Sonarworks / Sienna / Extra (Sienna offline en Extra)
 -- @author Patricio Maripani Navarro
--- @version 2.0
+-- @version 2.1
 -- @changelog
 --   + Detección de plugins por nombre (ya no depende de posición fija)
+--   + Fallback por posición si no encuentra por nombre
 --   + Estado persistido en ExtState y refresh de toolbar
 --   + Eliminado reaper.defer() innecesario
 --   + Pregunta el nombre del plugin si no lo encuentra
@@ -16,6 +17,7 @@
 -- CONFIG (personalizá libremente)
 --------------------------------------------------------------------------------
 local PLUGINS = { "Sonarworks", "Sienna", "Extra" } -- subcadenas para localizar cada plugin
+local POSITIONS = { 4, 5, 6 }       -- fallback: posiciones 1-based de cada plugin
 local EXT_SECTION = "enemigo_monitor"
 local EXT_KEY = "mult_sienna_state"
 
@@ -33,6 +35,15 @@ local function find_recfx(substr)
     if ok and name and name:lower():find(low, 1, true) then
       return i
     end
+  end
+  return nil
+end
+
+-- Fallback por posición 1-based (si el plugin no aparece por nombre)
+local function recfx_by_pos(pos)
+  local cnt = reaper.TrackFX_GetRecCount(track)
+  if pos and pos >= 1 and pos <= cnt then
+    return pos - 1
   end
   return nil
 end
@@ -58,13 +69,18 @@ local function set_toolbar_state(state)
 end
 
 --------------------------------------------------------------------------------
--- Resolución de plugins: ExtState -> config -> pregunta al usuario
+-- Resolución de plugins: ExtState -> config (nombre) -> posición -> pregunta
 --------------------------------------------------------------------------------
 local function resolve_plugin(i)
   local stored = reaper.GetExtState(EXT_SECTION, "plugin_" .. i)
   local name = (stored ~= "") and stored or PLUGINS[i]
   local found = find_recfx(name)
   if found then return found end
+
+  if not stored then
+    local bypos = recfx_by_pos(POSITIONS[i])
+    if bypos then return bypos end
+  end
 
   local retval, input = reaper.GetUserInputs(
     "Monitor mult sienna: plugin no encontrado",

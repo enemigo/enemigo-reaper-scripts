@@ -38,7 +38,7 @@ Alternan plugins de la cadena de monitorización del máster, actualizando el hi
 - **`pmn_monitor_switch.lua`** — Alterna entre **Sonarworks** y **Sienna** (activa uno, desactiva el otro).
 - **`pmn_monitor_toggle3.lua`** — Cicla por **3 plugins** de monitorización (Sonarworks → Sienna → Extra → Sonarworks...).
 - **`pmn_monitor_off.lua`** — Bypass de **Sonarworks y Sienna** (toggle todo encendido / apagado).
-- **`pmn_monotor_dim.lua`** — Toggle de bypass del plugin **DIM** (dim/attenuación).
+- **`pmn_monitor_dim.lua`** — Toggle de bypass del plugin **DIM** (dim/attenuación).
 - **`pmn_monitor_tonal_balance.lua`** — Muestra/oculta la ventana del plugin **Tonal Balance Control** (iZotope).
 - **`pmn_monitor_ab.lua`** — Muestra/oculta la ventana del plugin **A/B Meter**.
 - **`pmn_monitor_mult_sienna.lua`** — Cicla por **3 plugins** (Sonarworks → Sienna → Extra) y, al pasar a Extra, deja **Sienna offline**.
