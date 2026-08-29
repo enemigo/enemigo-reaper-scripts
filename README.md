@@ -68,7 +68,7 @@ El repo está preparado como repositorio ReaPack (`index.xml` en la raíz). Requ
 
 1. En REAPER: *Extensions → ReaPack → Manage repositories…*.
 2. Añade el repo con **Import repositories…** usando la URL:
-   - `https://github.com/enemigo/enemigo-reaper-scripts/raw/main/index.xml`
+   - `https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/main/index.xml`
    - (alternativa local, si no quieres usar GitHub): la ruta local del repo, ej. `/Users/patricio/Dropbox/ProyectosIA/Reaper`.
 3. *Extensions → ReaPack → Browse packages…* y marca los paquetes de la categoría **Scripts**.
 4. *Apply changes* para descargarlos e instalarlos.
@@ -100,4 +100,4 @@ git add index.xml && git commit -m "Update index.xml"
 git push
 ```
 
-El `index.xml` apunta a `https://github.com/enemigo/enemigo-reaper-scripts/raw/…`; si el repo es privado, usa la **carpeta local** como repositorio en ReaPack.
+El `index.xml` apunta a `https://raw.githubusercontent.com/enemigo/enemigo-reaper-scripts/…`; si el repo es privado, usa la **carpeta local** como repositorio en ReaPack.
