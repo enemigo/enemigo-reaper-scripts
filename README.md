@@ -6,7 +6,7 @@ Colección de scripts Lua (ReaScripts) para **REAPER**, creada por Patricio Mari
 
 ## Estructura
 
-Casi todos los scripts definen una variable `POS_x` con la posición del plugin en la cadena de monitorización del máster. **Si cambias el orden de los plugins en tu cadena, ajusta esas posiciones.**
+Los scripts están en `Scripts/` con nombres `pmn_*`. Los de monitorización detectan los plugins de la cadena del máster **por nombre** (subcadena) y, como fallback, por posición configurable.
 
 ---
 
@@ -33,7 +33,7 @@ Estos dos scripts forman un par de "imprimir" (freeze) mediante ReaInsert (enví
 
 ### Monitorización (plugins del canal máster)
 
-Alternan plugins de la cadena de monitorización del máster, actualizando el highlight del botón de toolbar (toggle). Los plugins se detectan **por nombre** (subcadena) y, como fallback, por posición (SONARWORKS/SoundID=4, SIENNA=5).
+Alternan plugins de la cadena de monitorización del máster, actualizando el highlight del botón de toolbar (toggle). Los plugins se detectan **por nombre** (subcadena) y, como fallback, por posición. Configura los nombres/posiciones en cada script (`PLUGINS`/`POSITIONS`).
 
 - **`pmn_monitor_switch.lua`** — Alterna entre **SoundID** y **Sienna** (activa uno, desactiva el otro; siempre deja uno activo). Si falta uno de los dos, toggle on/off del que existe.
 - **`pmn_monitor_tonal_balance.lua`** — Muestra/oculta la ventana del plugin **Tonal Balance Control** (iZotope).
@@ -50,7 +50,9 @@ Alternan plugins de la cadena de monitorización del máster, actualizando el hi
 
 - **`pmn_rutea_a_seleccionado.lua`** — Con varias pistas seleccionadas, enruta **todas a la primera seleccionada**: desactiva su Master send, les asigna el color de la pista destino y crea el send solo si no existe (no duplica).
 
-- **`pmn_solo_bus_a.lua`** — Paquete **Solo bus** con 5 acciones: `solo_bus_a/b/c/d/vox.lua` (bus "A", "B", "C", "D" y "VOX"), cada una con su propio atajo. Toggle de **selección y solo del bus**: busca por coincidencia difusa de nombre, crea el bus si no existe, des-solo el resto y lo trae a la vista. Lógica compartida en `pmn_solo_bus_lib.lua`.
+- **`pmn_solo_bus_a.lua`** — Paquete **Solo bus** con 5 acciones: `pmn_solo_bus_a/b/c/d/vox.lua` (bus "A", "B", "C", "D" y "VOX"), cada una con su propio atajo. Toggle de **selección y solo del bus**: busca por coincidencia difusa de nombre, crea el bus si no existe, des-solo el resto y lo trae a la vista. Lógica compartida en `pmn_solo_bus_lib.lua`.
+
+### Comparación de FX
 
 - **`pmn_compara_fx.lua`** — **A/B switch** de la cadena FX de la pista seleccionada: guarda el estado de los FX y los invierte (activos↔inactivos); vuelve a ejecutar para restaurar el original. Ignora los FX offline.
 - **`pmn_toggle_fx.lua`** — Alterna el bypass del **último FX tocado** (el enfocado, con ventana abierta). No requiere pista seleccionada.
@@ -85,7 +87,7 @@ Para actualizar tras nuevos commits: *ReaPack → Synchronize packages*.
 2. Carga cada archivo desde la **Action List** en la sección `[Main]`.
 3. Asigna las acciones a atajos de teclado, botones de toolbar, menús, etc.
 
-> **Nota:** verifica las posiciones (`POS_*`) de los plugins de monitorización y, para el freeze, que cada pista FREEZE quede justo debajo de su original.
+> **Nota:** en los scripts de monitorización, verifica que los nombres (`PLUGINS`) o posiciones (`POSITIONS`) coincidan con tu cadena; para el freeze, que cada pista FREEZE quede justo debajo de su original.
 
 ---
 
