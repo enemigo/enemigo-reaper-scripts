@@ -1,7 +1,9 @@
 -- @description pmn_Estructura de mezcla completa con ruteo automático (batería, grupos, voces, guitarras, bajos)
 -- @author Patricio Maripani Navarro
--- @version 4.2
+-- @version 4.3
 -- @changelog
+--   + Pistas HIHAT y RIDE (ruteadas al bus OH) y TOM4 (ruteado a TOMS)
+--   + Alias nuevos: "hi hat", "kick in", "kick out", "caja up", "caja bord"
 --   + Todo el proceso en un único bloque de Undo (deshacer de una vez)
 --   + Opción "modo seco" (REORDER_TRACKS = false): no reordena pistas
 --   + Ignora pistas MIDI en el ruteo automático por prefijo
@@ -9,7 +11,7 @@
 --   + Nuevos alias de reconocimiento (kick, bombo, snare trg, etc.)
 -- @about
 --   Crea/actualiza la estructura de ruteo de una mezcla: pistas y buses de batería (Kick In/Out,
---   Snare, Toms, OH, Room), grupos A/B/C/D, buses de voz (VOX, VDelay, VRoom, VHall, VPlate),
+--   Snare, Hi-Hat, Ride, Toms, OH, Room), grupos A/B/C/D, buses de voz (VOX, VDelay, VRoom, VHall, VPlate),
 --   coros (GBV) y ruteo automático por prefijo de nombre (guitarras, voces, instrumentos, bajos).
 --   Aplica colores y reordena las pistas en un orden predefinido.
 -- @website https://github.com/enemigo/enemigo-reaper-scripts
@@ -25,17 +27,20 @@ local REORDER_TRACKS = true  -- false = modo seco: crea/rutea pero no reordena
 --------------------------------------------------------------------------------
 local trackAliases = {
     -- Se manejan dos bombos de forma independiente
-    KICK_IN       = {"kick_in", "bombo_in", "k_in", "kick_in_mic", "bombo"},
-    KICK_OUT      = {"kick_out", "bombo_out", "k_out"},
-    SNARE_TOP     = {"snare_top", "snare", "snare_up", "caja_arriba", "caja", "snare sample", "snare trg", "snare_top_mic"},
+    KICK_IN       = {"kick_in", "bombo_in", "k_in", "kick_in_mic", "bombo", "kick in"},
+    KICK_OUT      = {"kick_out", "bombo_out", "k_out", "kick out"},
+    SNARE_TOP     = {"snare_top", "snare", "snare_up", "caja_arriba", "caja", "snare sample", "snare trg", "snare_top_mic", "caja up"},
     -- Se agrega "snare_bot" para reconocer la pista del usuario
-    SNARE_BOTTOM  = {"snare_bottom", "snare_down", "caja_abajo", "snare_bot", "snare_bottom_mic"},
+    SNARE_BOTTOM  = {"snare_bottom", "snare_down", "caja_abajo", "snare_bot", "snare_bottom_mic", "caja bord", "caja bord.", "caja borde"},
     SNARE_REV     = {"snare_rev", "reverb caja", "snare reverb"},
     OHL           = {"ohl", "oh l", "overhead l"},
     OHR           = {"ohr", "oh r", "overhead r"},
+    HIHAT         = {"hihat", "hi hat", "hh", "hat", "charles", "hh_closed"},
+    RIDE          = {"ride", "ride c", "campana"},
     TOM1          = {"tom1", "t1", "tom 1", "tom_hi"},
     TOM2          = {"tom2", "t2", "tom 2", "tom_mid"},
     TOM3          = {"tom3", "t3", "tom 3", "tom_low", "floor tom"},
+    TOM4          = {"tom4", "t4", "tom 4"},
     ROOM          = {"room", "sala", "ambiente", "room_chil"}, -- Se añade alias para "ROOM_CHIL"
     -- Se agrega "room_com" para reconocer el typo común
     ROOM_COMP     = {"room_comp", "room c", "sala comp", "room_com"}
@@ -197,7 +202,7 @@ function reorderAllTracks()
     local trackMap = {}
     local drumTrackNames = {
         "GDRUM", "NY", "KICK_IN", "KICK_OUT", "SNARE_TOP", "SNARE_BOTTOM", "SNARE_REV",
-        "OH", "OHL", "OHR", "TOMS", "TOM1", "TOM2", "TOM3", "ROOM", "ROOM_COMP"
+        "OH", "OHL", "OHR", "HIHAT", "RIDE", "TOMS", "TOM1", "TOM2", "TOM3", "TOM4", "ROOM", "ROOM_COMP"
     }
     local trackCount = reaper.CountTracks(0)
     for i = 0, trackCount - 1 do
@@ -247,10 +252,13 @@ function setupAndRouteTracks()
   local trackOH = getOrCreateTrackByAliases("OH", nil, purpleColor)
   local trackOHL = getOrCreateTrackByAliases("OHL", trackAliases.OHL, purpleColor)
   local trackOHR = getOrCreateTrackByAliases("OHR", trackAliases.OHR, purpleColor)
+  local trackHIHAT = getOrCreateTrackByAliases("HIHAT", trackAliases.HIHAT, purpleColor)
+  local trackRIDE = getOrCreateTrackByAliases("RIDE", trackAliases.RIDE, purpleColor)
   local trackTOMS = getOrCreateTrackByAliases("TOMS", nil, purpleColor)
   local trackTOM1 = getOrCreateTrackByAliases("TOM1", trackAliases.TOM1, purpleColor)
   local trackTOM2 = getOrCreateTrackByAliases("TOM2", trackAliases.TOM2, purpleColor)
   local trackTOM3 = getOrCreateTrackByAliases("TOM3", trackAliases.TOM3, purpleColor)
+  local trackTOM4 = getOrCreateTrackByAliases("TOM4", trackAliases.TOM4, purpleColor)
   local trackROOM = getOrCreateTrackByAliases("ROOM", trackAliases.ROOM, purpleColor)
   local trackROOM_COMP = getOrCreateTrackByAliases("ROOM_COMP", trackAliases.ROOM_COMP, purpleColor)
 
@@ -279,6 +287,10 @@ function setupAndRouteTracks()
   ensureSend(trackOHL, trackOH)
   configureTrack(trackOHR, 1.0)
   ensureSend(trackOHR, trackOH)
+  configureTrack(trackHIHAT)
+  ensureSend(trackHIHAT, trackOH)
+  configureTrack(trackRIDE)
+  ensureSend(trackRIDE, trackOH)
   configureTrack(trackTOMS)
   ensureSend(trackTOMS, trackGDRUM)
   ensureSend(trackTOMS, trackNY)
@@ -288,6 +300,8 @@ function setupAndRouteTracks()
   ensureSend(trackTOM2, trackTOMS)
   configureTrack(trackTOM3, 0.70)
   ensureSend(trackTOM3, trackTOMS)
+  configureTrack(trackTOM4, 1.0)
+  ensureSend(trackTOM4, trackTOMS)
   configureTrack(trackROOM)
   ensureSend(trackROOM, trackGDRUM)
   configureTrack(trackROOM_COMP)
